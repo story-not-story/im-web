@@ -5,6 +5,7 @@ import store from './store'
 import fastClick from 'fastclick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from 'axios'
+import qs from 'qs'
 import 'styles/border.css'
 import 'styles/reset.css'
 import 'styles/iconfont.css'
@@ -21,6 +22,14 @@ Vue.config.devtools = true
 axios.defaults.baseURL = 'http://localhost:8081'
 axios.defaults.withCredentials = true
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.interceptors.request.use(function (config) {
+  if (config.method === 'post') {
+    config.data = qs.stringify({ ...config.data })
+  }
+  return config
+}, function (error) {
+  return Promise.reject(error)
+})
 Vue.prototype.$axios = axios
 new Vue({
   router,

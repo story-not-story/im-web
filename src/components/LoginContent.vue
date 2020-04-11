@@ -3,7 +3,7 @@
     <form ref="form" name="user" class="form" method="post">
       <div class="wrapper">
         <label v-text="flag ? 'IM号' : '昵称'"></label>
-        <input v-model.lazy="id" class="content" type="text" :name="flag ? 'id' : 'name'" placeholder="用户名"/>
+        <input v-model.lazy="id" class="content" type="text" name="id" placeholder="用户名"/>
       </div>
       <div class="wrapper">
         <label>密码</label>
@@ -23,7 +23,6 @@
 </template>
 <script>
 import Captcha from 'components/Captcha.vue'
-import qs from 'qs'
 export default {
   name: 'LoginContent',
   data () {
@@ -45,6 +44,7 @@ export default {
         this.flag = !this.flag
         this.id = ''
         this.password = ''
+        this.propname = this.propname === 'id' ? 'name' : 'id'
       } else {
         if (this.id === '') {
           this.errormsg = this.flag ? 'IM号不能为空' : '昵称不能为空'
@@ -55,14 +55,15 @@ export default {
         } else if (this.captcha !== this.identifyCode) {
           this.errormsg = '验证码错误'
         } else {
+          this.errormsg = ''
           this.$axios({
-            method: 'POST',
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
-            data: qs.stringify({
+            method: 'post',
+            url: this.flag ? '/login' : '/register',
+            data: {
               id: this.id,
+              name: this.id,
               password: this.password
-            }),
-            url: '/login'
+            }
           }).then((res) => {
             const data = res.data
             if (data.code === 0) {

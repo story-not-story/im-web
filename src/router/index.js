@@ -88,5 +88,12 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'Login') {
+    if (!document.cookie) {
+      router.push({ name: 'Login' })
+    }
+  }
+  next()
+})
 export default router

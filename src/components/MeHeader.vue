@@ -1,12 +1,18 @@
 <template>
   <div class="header">
     我的资料
-    <div class="iconfont right">&#xe61f;</div>
+    <div class="iconfont right" @click="logout">&#xe605;</div>
   </div>
 </template>
 <script>
 export default {
-  name: 'MeHeader'
+  name: 'MeHeader',
+  methods: {
+    logout () {
+      this.$axios.get('/logout')
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 <style lang="stylus" scoped>
