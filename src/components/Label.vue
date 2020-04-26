@@ -1,25 +1,18 @@
 <template>
   <div class="label" ref="wrapper">
     <div class="first-child">
-      <div v-for="(item,index) in showlist" :key="index">
-        <div class="title" @click="handleClick(index)">
+      <div :key="label.id" v-for="(label,index) in labelList">
+        <div class="title" @click="handleClick(index)"><!--v-text会覆盖掉标签内所有内容，如果标签内有标签，用{{}}-->
           <span class="iconfont" v-if="showlist[index]">&#xe6aa;</span>
           <span class="iconfont" v-else>&#xe69b;</span>
-          高中同学
+          {{label.name}}
         </div>
         <div class="dropdown" v-show="showlist[index]">
-          <div class="friend" @click="handleFriend">
-            <img class="img" alt="玉米粥" :src="img"/>
+          <div class="friend" @click="handleFriend" v-for="friend in label.friendList" :key="friend.friendId">
+            <img class="img" alt="玉米粥" :src="$imgurl(friend.avatar)"/>
             <div class="desc border-topbottom">
-              <div class="remark">胡君</div>
-              <div class="word">[手机在线] 不惧风雨前进</div>
-            </div>
-          </div>
-          <div class="friend" @click="handleFriend">
-            <img class="img" alt="玉米粥" :src="img"/>
-            <div class="desc border-topbottom">
-              <div class="remark">胡君</div>
-              <div class="word">[手机在线] 不惧风雨前进</div>
+              <div class="remark" v-text="friend.remark">胡君</div>
+              <div class="word" v-text="friend.signature">[手机在线] 不惧风雨前进</div>
             </div>
           </div>
         </div>
@@ -34,8 +27,8 @@ export default {
   name: 'Label',
   data () {
     return {
-      img: require('img/yumizhou.jpeg'),
-      showlist: [false, false, false, false]
+      showlist: [],
+      labelList: []
     }
   },
   methods: {
@@ -45,6 +38,20 @@ export default {
     handleFriend () {
       this.$router.push({ path: '/user' })
     }
+  },
+  created () {
+    this.$axios.get('/label/friendlist', {
+      params: {
+        userId: this.$store.state.userId
+      }
+    }).then((res) => {
+      const data = res.data
+      if (data.code === 0) {
+        this.labelList = data.data.labelList
+        const size = this.labelList.length
+        this.showlist = Array(size).fill(false)
+      }
+    })
   },
   mounted () {
     this.$nextTick(() => {
@@ -68,11 +75,11 @@ export default {
     right: 0
     bottom: .8rem
     left: 0
-    padding-left: .1rem
+    padding-left: .2rem
     .title
       height: .75rem
       line-height: .75rem
-      font-size: .5rem
+      font-size: .4rem
     .dropdown
       padding-left: $pl
       .friend

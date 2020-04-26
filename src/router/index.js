@@ -5,13 +5,17 @@ import Login from '../views/Login.vue'
 import Search from '../views/Search.vue'
 import Me from '../views/Me.vue'
 import Relation from '../views/Relation.vue'
-import Labelv from '../views/Labelv.vue'
+import Label from 'components/Label.vue'
 import Friendv from '../views/Friendv.vue'
-import NewFriend from '../views/NewFriend.vue'
-import Groupv from '../views/Groupv.vue'
+import Invitation from 'components/Invitation.vue'
+import Group from 'components/Group.vue'
 import User from '../views/User.vue'
+import Groupv from '../views/Groupv.vue'
 import Message from '../views/Message.vue'
+import Apply from '../views/Apply.vue'
 import CreateGroup from '../views/CreateGroup.vue'
+import InnerSearch from '../views/InnerSearch.vue'
+import ApplyDetailv from '../views/ApplyDetailv.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -35,6 +39,11 @@ const routes = [
     component: Search
   },
   {
+    path: '/innersearch',
+    name: 'InnerSearch',
+    component: InnerSearch
+  },
+  {
     path: '/creategroup',
     name: 'CreateGroup',
     component: CreateGroup
@@ -46,18 +55,18 @@ const routes = [
     children: [
       {
         path: 'label',
-        name: 'Labelv',
-        component: Labelv
+        name: 'Label',
+        component: Label
       },
       {
         path: 'group',
-        name: 'Groupv',
-        component: Groupv
+        name: 'Group',
+        component: Group
       },
       {
-        path: 'newfriend',
-        name: 'NewFriend',
-        component: NewFriend
+        path: 'invite',
+        name: 'Invitation',
+        component: Invitation
       },
       {
         path: '',
@@ -77,9 +86,24 @@ const routes = [
     component: User
   },
   {
+    path: '/groupinfo',
+    name: 'Groupv',
+    component: Groupv
+  },
+  {
     path: '/message',
     name: 'Message',
     component: Message
+  },
+  {
+    path: '/apply',
+    name: 'Apply',
+    component: Apply
+  },
+  {
+    path: '/apply/detail',
+    name: 'ApplyDetailv',
+    component: ApplyDetailv
   }
 ]
 

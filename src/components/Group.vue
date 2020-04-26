@@ -1,20 +1,16 @@
 <template>
   <div class="group" ref="wrapper">
     <div class="first-child">
-      <div v-for="(item,index) in list" :key="index">
-        <div class="title" @click="handleClick(item)">
-          <span class="iconfont" v-if="item.show">&#xe6aa;</span>
+      <div v-for="(value,name,index) in map" :key="index">
+        <div class="title" @click="handleClick(index)"><!--v-text会覆盖掉标签内所有内容，如果标签内有标签，用{{}}-->
+          <span class="iconfont" v-if="showlist[index]">&#xe6aa;</span>
           <span class="iconfont" v-else>&#xe69b;</span>
-          {{item.name}}
+          {{name}}
         </div>
-        <div class="dropdown" v-show="item.show">
-          <div class="friend" @click="handleMsg">
-            <img class="img" alt="玉米粥" :src="img"/>
-            <div class="desc border-topbottom">南邮计软</div>
-          </div>
-          <div class="friend" @click="handleMsg">
-            <img class="img" alt="玉米粥" :src="img"/>
-            <div class="desc border-topbottom">南邮计软</div>
+        <div class="dropdown" v-show="showlist[index]">
+          <div class="friend" @click="handleMsg(item.id)" v-for="item in value" :key="item.id">
+            <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
+            <div class="desc border-topbottom" v-text="item.name">南邮计软</div>
           </div>
         </div>
       </div>
@@ -23,21 +19,34 @@
 </template>
 <script>
 import BScroll from 'better-scroll'
+import Vue from 'vue'
 export default {
   name: 'Group',
   data () {
     return {
-      img: require('img/yumizhou.jpeg'),
-      list: [{ name: '置顶群聊', show: false }, { name: '我创建的群聊', show: false }, { name: '我管理的群聊', show: false }, { name: '我加入的群聊', show: false }]
+      map: {},
+      showlist: [false, false, false]
     }
   },
   methods: {
-    handleClick (item) {
-      item.show = !item.show
+    handleClick (index) {
+      Vue.set(this.showlist, index, !this.showlist[index])
     },
-    handleMsg () {
-      this.$router.push({ path: '/message' })
+    handleMsg (id) {
+      this.$router.push({ path: '/message', query: { isGroup: true, otherId: id } })
     }
+  },
+  created () {
+    this.$axios.get('/group', {
+      params: {
+        userId: this.$store.state.userId
+      }
+    }).then((res) => {
+      const data = res.data
+      if (data.code === 0) {
+        this.map = data.data
+      }
+    })
   },
   mounted () {
     this.$nextTick(() => {
@@ -61,11 +70,11 @@ export default {
     right: 0
     bottom: .8rem
     left: 0
-    padding-left: .1rem
+    padding-left: .2rem
     .title
       height: .75rem
       line-height: .75rem
-      font-size: .5rem
+      font-size: .4rem
     .dropdown
       padding-left: $pl
       .friend

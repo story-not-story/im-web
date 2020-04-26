@@ -1,18 +1,22 @@
 <template>
   <div class="header">
-    <div class="iconfont left" @click="handleBack">&#xe622;</div>
+    <div class="iconfont left" @click="handleBack">取消</div>
     <div class="mid">
-      <slot>个人资料</slot>
+      <slot>加好友</slot>
     </div>
-    <div class="iconfont right">&#xe61f;</div>
+    <div class="iconfont right" @click="handleSend">发送</div>
   </div>
 </template>
 <script>
+import Bus from '@/bus.js'
 export default {
-  name: 'UserHeader',
+  name: 'ApplyHeader',
   methods: {
     handleBack () {
       this.$router.go(-1)
+    },
+    handleSend () {
+      Bus.$emit('submitapply')
     }
   }
 }

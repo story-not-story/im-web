@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Header></Header>
+    <Header>消息</Header>
     <Msg></Msg>
     <Footer></Footer>
   </div>

@@ -1,24 +1,20 @@
 <template>
-  <div class="groupv">
-    <Header></Header>
-    <Menu></Menu>
-    <Group></Group>
-    <Footer></Footer>
+  <div class="user">
+    <UserHeader>群聊资料</UserHeader>
+    <GroupInfo></GroupInfo>
+    <GroupFooter></GroupFooter>
   </div>
 </template>
 <script>
-// @ is an alias to /src
-import Group from 'components/Group.vue'
-import Menu from 'components/Menu.vue'
-import Footer from 'components/Footer.vue'
-import Header from 'components/Header.vue'
+import UserHeader from 'components/UserHeader.vue'
+import GroupInfo from 'components/GroupInfo.vue'
+import GroupFooter from 'components/GroupFooter.vue'
 export default {
   name: 'Groupv',
   components: {
-    Group,
-    Footer,
-    Header,
-    Menu
+    UserHeader,
+    GroupInfo,
+    GroupFooter
   }
 }
 </script>

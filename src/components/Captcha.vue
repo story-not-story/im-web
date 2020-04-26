@@ -1,12 +1,14 @@
 <template>
-  <canvas id="canvas" @click="randomCaptcha"></canvas>
+  <canvas id="canvas"></canvas>
 </template>
 <script>
 export default {
   name: 'Captcha',
+  props: {
+    identifyCode: String
+  },
   data () {
     return {
-      identifyCode: '',
       fontSizeMin: 0.3,
       fontSizeMax: 0.5,
       backgroundColorMin: 180,
@@ -26,22 +28,22 @@ export default {
   },
   methods: {
     // 生成一个随机数
-    randomCaptcha () {
-      var code = ''
-      for (let i = 0; i < 4; i++) {
-        const a = this.randomNum(0, 100)
-        if (a > 50) {
-          const i = this.randomNum(0, 25)
-          code = String.fromCharCode((65 + i)) + code
-        } else {
-          const i = this.randomNum(0, 9)
-          code = String.fromCharCode((48 + i)) + code
-        }
-      }
-      this.identifyCode = code
-      console.log(this.identifyCode)
-      this.$emit('change-captcha', this.identifyCode)
-    },
+    // randomCaptcha () {
+    //   var code = ''
+    //   for (let i = 0; i < 4; i++) {
+    //     const a = this.randomNum(0, 100)
+    //     if (a > 50) {
+    //       const i = this.randomNum(0, 25)
+    //       code = String.fromCharCode((65 + i)) + code
+    //     } else {
+    //       const i = this.randomNum(0, 9)
+    //       code = String.fromCharCode((48 + i)) + code
+    //     }
+    //   }
+    //   this.identifyCode = code
+    //   console.log(this.identifyCode)
+    //   this.$emit('change-captcha', this.identifyCode)
+    // },
     randomNum (min, max) {
       return Math.floor(Math.random() * (max - min) + min)
     },
@@ -118,7 +120,7 @@ export default {
     }
   },
   mounted () {
-    this.randomCaptcha()
+    // this.randomCaptcha()
     this.rate = window.innerWidth * 0.1333
     this.contentWidth = this.width * this.rate
     this.contentHeight = this.height * this.rate

@@ -15,6 +15,12 @@ export default {
     MsgHeader,
     MsgFooter,
     MsgContent
+  },
+  created () {
+    this.$ws.creatWebSocket()
+  },
+  beforeDestroy () {
+    this.$ws.websocket.close()
   }
 }
 </script>

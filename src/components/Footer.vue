@@ -2,7 +2,7 @@
   <div class="footer">
     <router-link to="/home"><div class="iconfont myicon">&#xe62e;</div></router-link>
     <router-link to="/relation"><div class="iconfont myicon">&#xe61c;</div></router-link>
-    <router-link to="/home"><div class="iconfont myicon">&#xe600;</div></router-link>
+<!--     <router-link to="/home"><div class="iconfont myicon">&#xe600;</div></router-link> -->
     <router-link to="/me"><div class="iconfont myicon">&#xe63b;</div></router-link>
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
     height: .8rem
     background: #fff
     .myicon
-      width: 25%
+      width: 33.33%
       height: 100%
       color: $bgcolor
       float: left

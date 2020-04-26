@@ -4,19 +4,20 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 module.exports = {
-  devServer: {
-    disableHostCheck: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8081',
-        changeOrigin: true,
-        ws: true,
-        pathRewrite: {
-          '^/api': '/'
-        }
-      }
-    }
-  },
+  // devServer: {
+  //   disableHostCheck: true,
+  //   proxy: {
+  //     '/img': {
+  //       target: 'http://localhost:8081',
+  //       changeOrigin: true,
+  //       ws: true,
+  //       port: 8080,
+  //       pathRewrite: {
+  //         '^/img': '/img'
+  //       }
+  //     }
+  //   }
+  // },
   chainWebpack: (config)=>{
     config.resolve.alias
       .set('@', resolve('src'))

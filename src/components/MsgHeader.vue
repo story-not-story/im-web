@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="iconfont left" @click="handleBack">&#xe622;</div>
-    <div class="mid">玲珑</div>
+    <div class="mid" v-text="$route.query.name">玲珑</div>
     <div class="iconfont right">&#xe643;</div>
   </div>
 </template>

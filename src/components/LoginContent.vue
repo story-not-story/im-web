@@ -10,7 +10,7 @@
         <input v-model.lazy="password" class="content" type="password" name="password" placeholder="密码(字母数字6-16位)"/>
       </div>
       <div class="captcha">
-        <Captcha @change-captcha="handleCaptcha"></Captcha>
+        <Captcha @click.native="handleCaptcha" :identifyCode="identifyCode"></Captcha>
         <input v-model.lazy="captcha" class="input" type="text" name="captcha" placeholder="4位验证码" />
       </div>
       <div class="wrapper">
@@ -38,13 +38,34 @@ export default {
   components: {
     Captcha
   },
+  mounted () {
+    this.randomCaptcha()
+  },
   methods: {
+    randomNum (min, max) {
+      return Math.floor(Math.random() * (max - min) + min)
+    },
+    randomCaptcha () {
+      var code = ''
+      for (let i = 0; i < 4; i++) {
+        const a = this.randomNum(0, 100)
+        if (a > 50) {
+          const i = this.randomNum(0, 25)
+          code = String.fromCharCode((65 + i)) + code
+        } else {
+          const i = this.randomNum(0, 9)
+          code = String.fromCharCode((48 + i)) + code
+        }
+      }
+      this.identifyCode = code
+      console.log(this.identifyCode)
+    },
     handleClick (event) {
       if (this.flag ^ event.target.value === '登录') {
         this.flag = !this.flag
         this.id = ''
         this.password = ''
-        this.propname = this.propname === 'id' ? 'name' : 'id'
+        this.captcha = ''
       } else {
         if (this.id === '') {
           this.errormsg = this.flag ? 'IM号不能为空' : '昵称不能为空'
@@ -67,14 +88,24 @@ export default {
           }).then((res) => {
             const data = res.data
             if (data.code === 0) {
-              this.$router.push({ path: '/home' })
+              if (this.flag) {
+                this.$store.commit('changeUserId', this.id)
+                this.$router.push({ path: '/home' })
+              } else {
+                this.flag = !this.flag
+                this.id = data.data.userId
+                console.log('id:' + data.data.userId)
+                this.password = ''
+                this.captcha = ''
+                this.randomCaptcha()
+              }
             }
           })
         }
       }
     },
-    handleCaptcha (identifyCode) {
-      this.identifyCode = identifyCode
+    handleCaptcha () {
+      this.randomCaptcha()
     }
   }
 }

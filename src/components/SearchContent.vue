@@ -1,68 +1,61 @@
 <template>
   <div class="friendlist" ref="wrapper">
     <div class="first-child">
-      <div class="letter border-topbottom">人</div>
-      <div class="friend border-topbottom">
-        <img class="img" alt="玉米粥" :src="img"/>
+      <div class="friend border-topbottom" v-for="item in list" :key="item.id">
+        <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
         <div class="desc">
-          <div class="remark">胡君</div>
-          <div class="word">[手机在线] 不惧风雨前进</div>
+          <div class="remark" v-text="item.name">胡君</div>
+          <div class="word" v-text="item.signature">[手机在线] 不惧风雨前进</div>
         </div>
       </div>
-      <div class="friend">
-        <img class="img" alt="玉米粥" :src="img"/>
-        <div class="desc">
-          <div class="remark">胡君</div>
-          <div class="word">[手机在线] 不惧风雨前进</div>
-        </div>
-      </div>
-      <div class="iconfont border-topbottom more">查看更多&#xe603;</div>
-      <div class="letter border-topbottom">群</div>
-      <div class="friend border-topbottom">
-        <img class="img" alt="玉米粥" :src="img"/>
-        <div class="desc">
-          <div class="remark">胡君</div>
-          <div class="word">[手机在线] 不惧风雨前进</div>
-        </div>
-      </div>
-      <div class="friend">
-        <img class="img" alt="玉米粥" :src="img"/>
-        <div class="desc">
-          <div class="remark">胡君</div>
-          <div class="word">[手机在线] 不惧风雨前进</div>
-        </div>
-      </div>
-      <div class="iconfont border-topbottom more">查看更多&#xe603;</div>
     </div>
   </div>
 </template>
 <script>
 import BScroll from 'better-scroll'
-// import { mapState, mapMutations } from 'vuex'
+import Bus from '@/bus.js'
 export default {
   name: 'SearchContent',
   data () {
     return {
-      img: require('img/yumizhou.jpeg')
+      list: []
     }
   },
-  // props: {
-  //   hotcity: Array,
-  //   city: Object,
-  //   letter: String
-  // },
-  // computed: {
-  //   ...mapState({
-  //     cityname: 'city'
-  //   })
-  // },
-  // methods: {
-  //   handleClick(city) {
-  //     this.changeCity(city)
-  //     this.$router.push('/')
-  //   },
-  //   ...mapMutations(['changeCity'])
-  // },
+  created () {
+    Bus.$on('search', (text, flag) => {
+      if (flag) {
+        this.$axios.get('/list', {
+          params: {
+            text: text
+          }
+        }).then((res) => {
+          const data = res.data
+          if (data.code === 0) {
+            if (Array.isArray(data.data)) {
+              this.list = data.data
+            } else {
+              this.$router.push({ path: '/user', query: { userId: data.data.id } })
+            }
+          }
+        })
+      } else {
+        this.$axios.get('/group/list', {
+          params: {
+            text: text
+          }
+        }).then((res) => {
+          const data = res.data
+          if (data.code === 0) {
+            if (Array.isArray(data.data)) {
+              this.list = data.data
+            } else {
+              this.$router.push({ path: '/groupinfo', query: { groupId: data.data.id } })
+            }
+          }
+        })
+      }
+    })
+  },
   mounted () {
     this.$nextTick(() => {
       if (!this.scroll) {
@@ -73,15 +66,7 @@ export default {
         this.scroll.refresh()
       }
     })
-  }//,
-  // watch: {
-  //   letter() {
-  //     if (this.letter) {
-  //       const area = this.$refs[this.letter][0]
-  //       this.scroll.scrollToElement(area)
-  //     }
-  //   }
-  // }
+  }
 }
 </script>
 <style lang="stylus" scoped>
@@ -98,11 +83,6 @@ export default {
     right: 0
     bottom: 0
     left: 0
-    .letter
-      padding: .1rem .1rem .1rem .2rem
-    .more
-      text-align: center
-      padding: .1rem .1rem .1rem .2rem
     .friend
       display: flex
       width: 100%

@@ -3,12 +3,13 @@
     <div class="first-child">
       <div v-for="(value, name) in map" :key="name">
         <div class="letter" v-text="name">A</div>
-        <div class="friend" @click="handleClick(item.friendId)" v-for="item in value" :key="item.friendId">
+        <div class="friend" @click="handleClick" v-for="(item,index) in value" :key="item.friendId">
           <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
           <div class="desc border-topbottom">
             <div class="remark" v-text="item.remark">胡君</div>
             <div class="word" v-text="item.signature">[手机在线] 不惧风雨前进</div>
           </div>
+          <div class="iconfont select" v-show="showmap[name][index]">&#xe813;</div>
         </div>
       </div>
     </div>
@@ -17,28 +18,27 @@
 <script>
 import BScroll from 'better-scroll'
 import Bus from '@/bus.js'
+import Vue from 'vue'
 // import { mapState, mapMutations } from 'vuex'
 export default {
-  name: 'Friend',
+  name: 'SelectFriend',
   props: {
-    map: {
-      type: Object,
-      default () {
-        return {}
-      }
+    map: Object
+  },
+  data () {
+    return {
+      showmap: {}
     }
   },
   methods: {
-    handleClick (userId) {
-      this.$router.push({ path: '/user', query: { userId: userId } })
+    handleClick () {
+      this.$router.push({ path: '/user' })
     },
     scrollToLetter (letter) {
       const area = this.$refs[letter][0]
       this.scroll.scrollToElement(area)
     },
-    changeMap (map) {
-      this.map = map
-    }
+    filter (text) {}
   },
   // props: {
   //   hotcity: Array,
@@ -59,7 +59,12 @@ export default {
   // },
   created () {
     Bus.$on('changeletter', this.scrollToLetter)
-    Bus.$on('change-map', this.changeMap)
+    for (const key in this.map) {
+      const size = this.map[key].length
+      const list = Array(size).fill(false)
+      Vue.set(this.showmap, key, list)
+    }
+    Bus.$on('search-friend', this.filter)
   },
   mounted () {
     this.$nextTick(() => {
@@ -71,12 +76,6 @@ export default {
         this.scroll.refresh()
       }
     })
-    // if (this.$el.style.bottom) {
-    //   this.$refs.style.bottom = this.$el.style.bottom
-    // }
-    // if (this.$el.style.top) {
-    //   this.$refs.style.top = this.$el.style.top
-    // }
   }
 }
 </script>
@@ -90,9 +89,9 @@ export default {
   .friendlist
     position: absolute
     overflow: hidden
-    top: 1.6rem
+    top: 2.8rem
     right: 0
-    bottom: .8rem
+    bottom: 0
     left: 0
     .letter
       padding: .1rem
@@ -101,6 +100,12 @@ export default {
       display: flex
       width: 100%
       height: 1.2rem
+      .select
+        position: absolute
+        top: 25%
+        bottom: 25%
+        right: .1rem
+        color: $bgcolor
       .img
         width: 1rem
         height: 1rem

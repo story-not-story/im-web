@@ -6,7 +6,7 @@
         <div class="iconfont myicon" v-else>&#xe7e2;</div>
       </div>
       <div class="input">
-        <input class="text" type="text" name="search"/>
+        <input class="text" type="text" name="search" @keyup.enter="handleEnter"/>
       </div>
       <div class="right">
         <span class="iconfont myicon" @click="handleEmoji">&#xe60b;</span>
@@ -70,6 +70,23 @@ export default {
       }
       this.moreshow = !this.moreshow
       Bus.$emit('change-height')
+    },
+    handleEnter (event) {
+      const data = {
+        content: event.target.value,
+        isGroup: this.$route.query.isGroup,
+        senderId: this.$store.state.userId,
+        receiverId: this.$route.query.otherId
+      }
+      console.log(data)
+      console.log(JSON.stringify(data))
+      this.$ws.websocket.send(JSON.stringify(data))
+      var self = this
+      setTimeout(() => {
+        const msg = self.$refs['msg-box']
+        msg.scrollTop = msg.scrollHeight
+      }, 500)
+      Bus.$emit('pushmsg', data)
     }
   }
 }

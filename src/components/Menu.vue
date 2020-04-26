@@ -2,30 +2,38 @@
   <div class="menu">
     <router-link to="/relation">
       <div class="myicon">
-        <div class="circle">好友</div>
+        <div :class="flag('/relation')">好友</div>
       </div>
     </router-link>
     <router-link to="/relation/label">
       <div class="myicon">
-        <div class="circle">分组</div>
+        <div :class="flag('/relation/label')">分组</div>
       </div>
     </router-link>
     <router-link to="/relation/group">
       <div class="myicon">
-        <div class="circle">群聊</div>
+        <div :class="flag('/relation/group')">群聊</div>
       </div>
     </router-link>
-    <router-link to="/relation/newfriend">
+    <router-link to="/relation/invite">
       <div class="myicon">
-        <div class="circle">新朋友</div>
+        <div :class="flag('/relation/invite')">新朋友</div>
       </div>
     </router-link>
   </div>
 </template>
 <script>
-// @ is an alias to /src
 export default {
-  name: 'Menu'
+  name: 'Menu',
+  methods: {
+    flag (url) {
+      if (this.$route.path === url) {
+        return 'text circle'
+      } else {
+        return 'text'
+      }
+    }
+  }
 }
 </script>
 <style lang="stylus" scoped>
@@ -42,7 +50,7 @@ export default {
       color: $bgcolor
       float: left
       position: relative
-      .circle
+      .text
         position: absolute
         left: 10%
         top: 10%
@@ -51,6 +59,7 @@ export default {
         text-align: center
         font-size: .4rem
         line-height: .64rem
+      .circle
         background: #ebf9fe
         border-radius: $radius
 </style>

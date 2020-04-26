@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    <UserHeader></UserHeader>
+    <UserHeader>个人资料</UserHeader>
     <MeInfo></MeInfo>
     <UserFooter></UserFooter>
   </div>

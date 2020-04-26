@@ -1,54 +1,63 @@
 <template>
   <div class="header">
-    <div class="input-header" v-if="show">
-      <div class="left">消息</div>
-      <div class="iconfont search-icon" @click="handleClick">&#xe8b9; 搜索</div>
-      <div class="iconfont right" @click="handleList" v-if="show">&#xe879;</div>
-      <ul class="list" v-show="listshow">
-        <router-link to="/creategroup">
-          <li class="iconfont item">&#xe640; 发起群聊</li>
-        </router-link>
-        <router-link to="/search">
-          <li class="iconfont item">&#xe649; 加好友/群</li>
-        </router-link>
-      </ul>
+    <div class="left">
+      <slot>消息</slot>
     </div>
-    <div class="input" v-else>
+    <router-link to="/innersearch" class="search-icon"><div class="iconfont">&#xe8b9; 搜索</div></router-link>
+    <div class="iconfont right" @click="handleList">&#xe879;</div>
+    <ul class="list" v-show="listshow">
+      <router-link to="/creategroup">
+        <li class="iconfont item">&#xe640; 发起群聊</li>
+      </router-link>
+      <router-link to="/search">
+        <li class="iconfont item">&#xe649; 加好友/群</li>
+      </router-link>
+    </ul>
+<!--     <div class="input" v-else>
       <div class="input-left">
         <div class="iconfont search-icon2">&#xe8b9;</div>
-        <input class="text" type="text" name="search" placeholder="搜索" v-model="text"/>
+        <input class="text" type="text" name="search" placeholder="搜索" v-model.trim="text" @keyup.enter="handleEnter"/>
         <div class="iconfont clear-icon" v-show="clearshow" @click="handelClear">&#xe635;</div>
       </div>
       <div class="input-right" @click="handleClick">取消</div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 export default {
   name: 'Header',
+  // props: {
+  //   title: String
+  // },
   data () {
     return {
-      listshow: false,
-      show: true,
-      text: ''
+      listshow: false
+      // show: true,
+      // text: ''
     }
   },
   methods: {
     handleList () {
       this.listshow = !this.listshow
-    },
-    handleClick () {
-      this.show = !this.show
-    },
-    handelClear () {
-      this.text = ''
+      console.log(this.listshow)
     }
-  },
-  computed: {
-    clearshow () {
-      return this.text !== ''
-    }
+    // handleClick () {
+    //   this.show = !this.show
+    // },
+    // handelClear () {
+    //   this.text = ''
+    // },
+    // handleEnter () {
+    //   if (this.text.trim() !== '') {
+    //     Bus.$emit('searchsum', this.text)
+    //   }
+    // }
   }
+  // computed: {
+  //   clearshow () {
+  //     return this.text !== ''
+  //   }
+  // }
 }
 </script>
 <style lang="stylus" scoped>
@@ -56,7 +65,6 @@ export default {
   .header
     color: #fff
     background-color: $bgcolor
-  .input-header
     height: .8rem
     display: flex
     align-items: center
@@ -67,7 +75,7 @@ export default {
     .left
       width: 1.2rem
       float: left
-      font-size: .5rem
+      font-size: .4rem
       margin-left: .1rem
     .search-icon
       flex: 1
@@ -96,31 +104,31 @@ export default {
       .item
         height: 50%
         line-height: .8rem
-  .input
-    height: 50%
-    margin-left: .1rem
-    display: flex
-    align-items: center
-    .input-left
-      height: .7rem
-      flex: 1
-      background: #fff
-      color: $grey
-      border-radius: $radius
-      display: flex
-      align-items: center
-      padding: 0 .1rem
-      .search-icon2
-        float: left
-        width: 8%
-      .text
-        flex: 1
-      .clear-icon
-        width: 8%
-        float: right
-    .input-right
-      width: 1rem
-      float: right
-      font-size: .4rem
-      line-height: .8rem
+  // .input
+  //   height: 50%
+  //   margin-left: .1rem
+  //   display: flex
+  //   align-items: center
+  //   .input-left
+  //     height: .7rem
+  //     flex: 1
+  //     background: #fff
+  //     color: $grey
+  //     border-radius: $radius
+  //     display: flex
+  //     align-items: center
+  //     padding: 0 .1rem
+  //     .search-icon2
+  //       float: left
+  //       width: 8%
+  //     .text
+  //       flex: 1
+  //     .clear-icon
+  //       width: 8%
+  //       float: right
+  //   .input-right
+  //     width: 1rem
+  //     float: right
+  //     font-size: .4rem
+  //     line-height: .8rem
 </style>
