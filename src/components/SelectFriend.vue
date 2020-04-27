@@ -19,7 +19,6 @@
 import BScroll from 'better-scroll'
 import Bus from '@/bus.js'
 import Vue from 'vue'
-// import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'SelectFriend',
   props: {
@@ -40,23 +39,6 @@ export default {
     },
     filter (text) {}
   },
-  // props: {
-  //   hotcity: Array,
-  //   city: Object,
-  //   letter: String
-  // },
-  // computed: {
-  //   ...mapState({
-  //     cityname: 'city'
-  //   })
-  // },
-  // methods: {
-  //   handleClick(city) {
-  //     this.changeCity(city)
-  //     this.$router.push('/')
-  //   },
-  //   ...mapMutations(['changeCity'])
-  // },
   created () {
     Bus.$on('changeletter', this.scrollToLetter)
     for (const key in this.map) {

@@ -1,18 +1,5 @@
 <template>
   <div class="header">
-<!--     <div class="input-header">
-      <div class="left" v-text="title"></div>
-      <router-link to="/innersearch"><div class="iconfont search-icon" @click="handleClick">&#xe8b9; 搜索</div></router-link>
-      <div class="iconfont right" @click="handleList">&#xe879;</div>
-      <ul class="list" v-show="listshow">
-        <router-link to="/creategroup">
-          <li class="iconfont item">&#xe640; 发起群聊</li>
-        </router-link>
-        <router-link to="/search">
-          <li class="iconfont item">&#xe649; 加好友/群</li>
-        </router-link>
-      </ul>
-    </div> -->
     <div class="input-left">
       <div class="iconfont search-icon2">&#xe8b9;</div>
       <input class="text" type="text" name="search" placeholder="搜索" v-model.trim="text" @keyup.enter="handleEnter"/>
@@ -25,20 +12,13 @@
 import Bus from '@/bus.js'
 export default {
   name: 'InnerSearchHeader',
-  // props: {
-  //   title: String
-  // },
   data () {
     return {
-      // listshow: false,
       show: true,
       text: ''
     }
   },
   methods: {
-    // handleList () {
-    //   this.listshow = !this.listshow
-    // }
     handleClick () {
       this.$router.go(-1)
     },

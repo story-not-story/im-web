@@ -23,11 +23,13 @@ const ws = {
         console.log(e)
         self.start()
         if (e.data !== 'ok') {
-          console.log(e.data)
           const resData = JSON.parse(e.data)
-          if (resData.status === 0) {
+          if (resData.code === 0) {
+            console.log('收到消息')
             console.log(resData)
-            Bus.$emit('pushmsg', resData)
+            Bus.$emit('pushmsg', resData.data)
+          } else if (resData.code === 21) {
+            Bus.$emit('refresh')
           }
         }
       }

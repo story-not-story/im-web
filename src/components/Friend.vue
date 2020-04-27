@@ -17,7 +17,6 @@
 <script>
 import BScroll from 'better-scroll'
 import Bus from '@/bus.js'
-// import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Friend',
   props: {
@@ -40,23 +39,6 @@ export default {
       this.map = map
     }
   },
-  // props: {
-  //   hotcity: Array,
-  //   city: Object,
-  //   letter: String
-  // },
-  // computed: {
-  //   ...mapState({
-  //     cityname: 'city'
-  //   })
-  // },
-  // methods: {
-  //   handleClick(city) {
-  //     this.changeCity(city)
-  //     this.$router.push('/')
-  //   },
-  //   ...mapMutations(['changeCity'])
-  // },
   created () {
     Bus.$on('changeletter', this.scrollToLetter)
     Bus.$on('change-map', this.changeMap)
@@ -71,12 +53,6 @@ export default {
         this.scroll.refresh()
       }
     })
-    // if (this.$el.style.bottom) {
-    //   this.$refs.style.bottom = this.$el.style.bottom
-    // }
-    // if (this.$el.style.top) {
-    //   this.$refs.style.top = this.$el.style.top
-    // }
   }
 }
 </script>

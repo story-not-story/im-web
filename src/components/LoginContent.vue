@@ -32,7 +32,8 @@ export default {
       errormsg: '',
       id: '',
       password: '',
-      captcha: ''
+      captcha: '',
+      click: true
     }
   },
   components: {
@@ -77,30 +78,34 @@ export default {
           this.errormsg = '验证码错误'
         } else {
           this.errormsg = ''
-          this.$axios({
-            method: 'post',
-            url: this.flag ? '/login' : '/register',
-            data: {
-              id: this.id,
-              name: this.id,
-              password: this.password
-            }
-          }).then((res) => {
-            const data = res.data
-            if (data.code === 0) {
-              if (this.flag) {
-                this.$store.commit('changeUserId', this.id)
-                this.$router.push({ path: '/home' })
-              } else {
-                this.flag = !this.flag
-                this.id = data.data.userId
-                console.log('id:' + data.data.userId)
-                this.password = ''
-                this.captcha = ''
-                this.randomCaptcha()
+          if (this.click) {
+            this.click = false
+            this.$axios({
+              method: 'post',
+              url: this.flag ? '/login' : '/register',
+              data: {
+                id: this.id,
+                name: this.id,
+                password: this.password
               }
-            }
-          })
+            }).then((res) => {
+              this.click = true
+              const data = res.data
+              if (data.code === 0) {
+                if (this.flag) {
+                  this.$store.commit('changeUserId', this.id)
+                  this.$router.push({ path: '/home' })
+                } else {
+                  this.flag = !this.flag
+                  this.id = data.data.userId
+                  console.log('id:' + data.data.userId)
+                  this.password = ''
+                  this.captcha = ''
+                  this.randomCaptcha()
+                }
+              }
+            })
+          }
         }
       }
     },

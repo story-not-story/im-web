@@ -59,8 +59,6 @@
 </template>
 <script>
 import BScroll from 'better-scroll'
-// import Text from 'components/Text.vue'
-// import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'MeInfo',
   data () {
@@ -68,26 +66,6 @@ export default {
       user: {}
     }
   },
-  // components: {
-  //   Text
-  // },
-  // props: {
-  //   hotcity: Array,
-  //   city: Object,
-  //   letter: String
-  // },
-  // computed: {
-  //   ...mapState({
-  //     cityname: 'city'
-  //   })
-  // },
-  // methods: {
-  //   handleClick(city) {
-  //     this.changeCity(city)
-  //     this.$router.push('/')
-  //   },
-  //   ...mapMutations(['changeCity'])
-  // },
   created () {
     let userId = this.$store.state.userId
     if (this.$route.query.userId) {
@@ -114,15 +92,7 @@ export default {
         this.scroll.refresh()
       }
     })
-  }//,
-  // watch: {
-  //   letter() {
-  //     if (this.letter) {
-  //       const area = this.$refs[this.letter][0]
-  //       this.scroll.scrollToElement(area)
-  //     }
-  //   }
-  // }
+  }
 }
 </script>
 <style lang="stylus" scoped>

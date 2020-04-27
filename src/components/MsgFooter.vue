@@ -72,21 +72,19 @@ export default {
       Bus.$emit('change-height')
     },
     handleEnter (event) {
+      var str = event.target.value
+      if (str.trim() === '') {
+        return
+      }
       const data = {
-        content: event.target.value,
+        content: str,
         isGroup: this.$route.query.isGroup,
         senderId: this.$store.state.userId,
         receiverId: this.$route.query.otherId
       }
+      console.log('发送消息')
       console.log(data)
-      console.log(JSON.stringify(data))
       this.$ws.websocket.send(JSON.stringify(data))
-      var self = this
-      setTimeout(() => {
-        const msg = self.$refs['msg-box']
-        msg.scrollTop = msg.scrollHeight
-      }, 500)
-      Bus.$emit('pushmsg', data)
     }
   }
 }

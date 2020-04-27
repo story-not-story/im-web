@@ -13,27 +13,14 @@
         <li class="iconfont item">&#xe649; 加好友/群</li>
       </router-link>
     </ul>
-<!--     <div class="input" v-else>
-      <div class="input-left">
-        <div class="iconfont search-icon2">&#xe8b9;</div>
-        <input class="text" type="text" name="search" placeholder="搜索" v-model.trim="text" @keyup.enter="handleEnter"/>
-        <div class="iconfont clear-icon" v-show="clearshow" @click="handelClear">&#xe635;</div>
-      </div>
-      <div class="input-right" @click="handleClick">取消</div>
-    </div> -->
   </div>
 </template>
 <script>
 export default {
   name: 'Header',
-  // props: {
-  //   title: String
-  // },
   data () {
     return {
       listshow: false
-      // show: true,
-      // text: ''
     }
   },
   methods: {
@@ -41,23 +28,7 @@ export default {
       this.listshow = !this.listshow
       console.log(this.listshow)
     }
-    // handleClick () {
-    //   this.show = !this.show
-    // },
-    // handelClear () {
-    //   this.text = ''
-    // },
-    // handleEnter () {
-    //   if (this.text.trim() !== '') {
-    //     Bus.$emit('searchsum', this.text)
-    //   }
-    // }
   }
-  // computed: {
-  //   clearshow () {
-  //     return this.text !== ''
-  //   }
-  // }
 }
 </script>
 <style lang="stylus" scoped>

@@ -17,7 +17,6 @@
 </template>
 <script>
 import BScroll from 'better-scroll'
-// import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Invitation',
   data () {
@@ -25,23 +24,6 @@ export default {
       list: []
     }
   },
-  // props: {
-  //   hotcity: Array,
-  //   city: Object,
-  //   letter: String
-  // },
-  // computed: {
-  //   ...mapState({
-  //     cityname: 'city'
-  //   })
-  // },
-  // methods: {
-  //   handleClick(city) {
-  //     this.changeCity(city)
-  //     this.$router.push('/')
-  //   },
-  //   ...mapMutations(['changeCity'])
-  // },
   created () {
     this.$axios.get('/invite/friend', {
       params: {
@@ -70,14 +52,6 @@ export default {
       this.$router.push({ path: '/apply/detail', query: { id: id } })
     }
   }
-  // watch: {
-  //   letter() {
-  //     if (this.letter) {
-  //       const area = this.$refs[this.letter][0]
-  //       this.scroll.scrollToElement(area)
-  //     }
-  //   }
-  // }
 }
 </script>
 <style lang="stylus" scoped>

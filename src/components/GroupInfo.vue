@@ -64,15 +64,7 @@ export default {
         this.scroll.refresh()
       }
     })
-  }//,
-  // watch: {
-  //   letter() {
-  //     if (this.letter) {
-  //       const area = this.$refs[this.letter][0]
-  //       this.scroll.scrollToElement(area)
-  //     }
-  //   }
-  // }
+  }
 }
 </script>
 <style lang="stylus" scoped>

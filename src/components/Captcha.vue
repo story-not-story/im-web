@@ -27,23 +27,6 @@ export default {
     }
   },
   methods: {
-    // 生成一个随机数
-    // randomCaptcha () {
-    //   var code = ''
-    //   for (let i = 0; i < 4; i++) {
-    //     const a = this.randomNum(0, 100)
-    //     if (a > 50) {
-    //       const i = this.randomNum(0, 25)
-    //       code = String.fromCharCode((65 + i)) + code
-    //     } else {
-    //       const i = this.randomNum(0, 9)
-    //       code = String.fromCharCode((48 + i)) + code
-    //     }
-    //   }
-    //   this.identifyCode = code
-    //   console.log(this.identifyCode)
-    //   this.$emit('change-captcha', this.identifyCode)
-    // },
     randomNum (min, max) {
       return Math.floor(Math.random() * (max - min) + min)
     },
@@ -125,12 +108,12 @@ export default {
     this.contentWidth = this.width * this.rate
     this.contentHeight = this.height * this.rate
     this.drawPic()
-    var that = this
+    var self = this
     window.onresize = () => {
-      that.rate = window.innerWidth * 0.1333
-      that.contentWidth = that.width * that.rate
-      that.contentHeight = that.height * that.rate
-      that.drawPic()
+      self.rate = window.innerWidth * 0.1333
+      self.contentWidth = self.width * self.rate
+      self.contentHeight = self.height * self.rate
+      self.drawPic()
     }
   }
 }

@@ -16,32 +16,6 @@ export default {
       img: require('img/yumizhou.jpeg')
     }
   },
-  // handleClick () {
-  //   this.$axios.post('/group', {
-  //     params: {
-  //       userId: this.$store.state.userId,
-  //       name:
-  //       j
-  //     }
-  //   })
-  // },
-  // props: {
-  //   hotcity: Array,
-  //   city: Object,
-  //   letter: String
-  // },
-  // computed: {
-  //   ...mapState({
-  //     cityname: 'city'
-  //   })
-  // },
-  // methods: {
-  //   handleClick(city) {
-  //     this.changeCity(city)
-  //     this.$router.push('/')
-  //   },
-  //   ...mapMutations(['changeCity'])
-  // },
   mounted () {
     this.$nextTick(() => {
       if (!this.scroll) {
@@ -52,15 +26,7 @@ export default {
         this.scroll.refresh()
       }
     })
-  }//,
-  // watch: {
-  //   letter() {
-  //     if (this.letter) {
-  //       const area = this.$refs[this.letter][0]
-  //       this.scroll.scrollToElement(area)
-  //     }
-  //   }
-  // }
+  }
 }
 </script>
 <style lang="stylus" scoped>

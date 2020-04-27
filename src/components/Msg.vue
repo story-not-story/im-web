@@ -15,7 +15,6 @@
   </div>
 </template>
 <script>
-// @ is an alias to /src
 // first-child增长内容超过固定高度的wrapper时才会scroll生效，所以要把增长内容用两层div包裹
 import BScroll from 'better-scroll'
 export default {

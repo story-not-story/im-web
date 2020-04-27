@@ -1,7 +1,6 @@
 <template>
   <div class="alphabet">
       <div class="item" v-for="(value, name) in map" :key="name" v-text="name" @touchstart.prevent="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd" @click="handleLetterClick" :ref="name"></div>
-      <!-- <li class="item" v-for="item in letters" v-text="item" :key="item" @touchstart.prevent="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd" @click="handleLetterClick" :ref="item"></li> -->
   </div>
 </template>
 <script>
