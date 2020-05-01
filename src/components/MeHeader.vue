@@ -11,6 +11,9 @@ export default {
     logout () {
       this.$axios.get('/logout')
       this.$router.push('/login')
+      if (this.$ws.websocket) {
+        this.$ws.websocket.close()
+      }
     }
   }
 }

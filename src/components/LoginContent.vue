@@ -95,6 +95,7 @@ export default {
                 if (this.flag) {
                   this.$store.commit('changeUserId', this.id)
                   this.$router.push({ path: '/home' })
+                  this.$ws.creatWebSocket()
                 } else {
                   this.flag = !this.flag
                   this.id = data.data.userId

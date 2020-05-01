@@ -16,11 +16,13 @@ export default {
     MsgFooter,
     MsgContent
   },
-  created () {
-    this.$ws.creatWebSocket()
+  methods: {
+    async beforeunloadFn () {
+      await this.$ws.reconnet()
+    }
   },
-  beforeDestroy () {
-    this.$ws.websocket.close()
+  mounted () {
+    this.beforeunloadFn()
   }
 }
 </script>

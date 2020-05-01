@@ -9,7 +9,7 @@ const ws = {
   lock: false,
   creatWebSocket: function () {
     if ('WebSocket' in window) {
-      this.websocket = new WebSocket('ws://localhost:8081/websocket/' + store.state.userId)
+      this.websocket = new WebSocket('ws://' + location.host + '/websocket/' + store.state.userId)
       var self = this
       this.websocket.onerror = function (e) {
         console.log(e)
@@ -38,6 +38,9 @@ const ws = {
         self.timeoutObj && clearTimeout(self.timeoutObj)
         self.serverTimeoutObj && clearTimeout(self.serverTimeoutObj)
         self.rectimeout && clearTimeout(self.rectimeout)
+        if (document.cookie) {
+          self.reconnet()
+        }
       }
       console.log(this.websocket)
     } else {
@@ -50,7 +53,9 @@ const ws = {
     this.rectimeout && clearTimeout(this.rectimeout)
     var self = this
     setTimeout(function () { // 没连接上会一直重连，设置延迟避免请求过多
-      self.creatWebSocket()
+      if (typeof self.websocket == 'undefined' || self.websocket === null) {//eslint-disable-line
+        self.creatWebSocket()
+      }
       self.lock = false
     }, 2000)
   },

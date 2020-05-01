@@ -85,6 +85,7 @@ export default {
       console.log('发送消息')
       console.log(data)
       this.$ws.websocket.send(JSON.stringify(data))
+      event.target.value = ''
     }
   }
 }
