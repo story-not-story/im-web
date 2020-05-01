@@ -6,9 +6,9 @@
         <div class="word" v-text="item.content">一起吃个饭吧1</div>
       </div>
       <div class="menu" v-show="menushow">
-        <span class="btn border-right" @click.stop="cancel" v-if="menushow && curMsg.senderId === $store.state.userId">撤回</span>
-        <span class="btn border-right" @click.stop="del">删除</span>
-        <span class="btn" @click.stop="copy">复制</span>
+        <div class="btn border-right" @click.stop="cancel" v-if="menushow && curMsg.senderId === $store.state.userId">撤回</div>
+        <div class="btn border-right" @click.stop="del">删除</div>
+        <div class="btn" @click.stop="copy">复制</div>
       </div>
     </div>
   </div>
@@ -35,6 +35,9 @@ export default {
     Bus.$on('change-height', () => {
       if (self.bottom === 0.8) {
         self.bottom = 2.4
+        this.$nextTick(() => {
+          this.$refs.msgbox.scrollTop = this.$refs.msgbox.scrollHeight
+        })
       } else {
         self.bottom = 0.8
       }
@@ -107,6 +110,7 @@ export default {
         this.$ws.websocket.send(JSON.stringify(this.curMsg))
         this.msglist.splice(this.curMsgIndex, 1)
       }
+      this.menushow = false
     },
     del () {
       this.$axios.get('/message/delete', {
@@ -121,6 +125,7 @@ export default {
         }
       })
       this.msglist.splice(this.curMsgIndex, 1)
+      this.menushow = false
     },
     copy () {
       this.$copyText(this.curMsg.content).then(function (e) {
@@ -128,6 +133,7 @@ export default {
       }, function (e) {
         console.log('copy fail')
       })
+      this.menushow = false
     }
   }
 }
@@ -145,19 +151,24 @@ export default {
     bottom: .8rem
     overflow-y: scroll
     .menu
+      z-index: 1
       position: fixed
       border-radius: $radius
       left: 50%
       top: 50%
+      width: 3.6rem
+      height: .8rem
       transform: translateX(-50%) translateY(-50%)
       padding: .1rem
       background-color: rgba(0, 0, 0, 0.5)
+      display: flex
+      align-items: center
+      justify-content: center
       .btn
-        width: 1rem
-        height: 1rem
-        padding: .1rem
+        width: 33.33%
         font-size: .4rem
         color: #fff
+        text-align: center
     .msg
       display: flex
       width: 100%

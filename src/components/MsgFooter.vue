@@ -60,16 +60,20 @@ export default {
     handleEmoji () {
       if (!this.emojishow && this.moreshow) {
         this.moreshow = false
+        this.emojishow = true
+      } else {
+        this.emojishow = !this.emojishow
+        Bus.$emit('change-height')
       }
-      this.emojishow = !this.emojishow
-      Bus.$emit('change-height')
     },
     handleMore () {
       if (this.emojishow && !this.moreshow) {
         this.emojishow = false
+        this.moreshow = true
+      } else {
+        this.moreshow = !this.moreshow
+        Bus.$emit('change-height')
       }
-      this.moreshow = !this.moreshow
-      Bus.$emit('change-height')
     },
     handleEnter (event) {
       var str = event.target.value
