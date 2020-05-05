@@ -12,8 +12,8 @@
       <label class="label">验证信息 </label>
       <p v-text="item.message">文字</p>
     </div>
-    <div class="btn">
-      <button type="button" class="item" @click="accept">接受</button>
+    <div class="btn" v-if="checkme()">
+      <button type="button" class="item" @click="accept">同意</button>
       <button type="button" class="item" @click="reject">拒绝</button>
     </div>
   </div>
@@ -27,45 +27,93 @@ export default {
     }
   },
   created () {
-    this.$axios.get('/invite/friend/detail', {
-      params: {
-        id: this.$route.query.id,
-        userId: this.$store.state.userId
-      }
-    }).then((res) => {
-      const data = res.data
-      if (data.code === 0) {
-        this.item = data.data
-      }
-    })
+    if (this.$route.query.isGroup) {
+      this.$axios.get('/apply/group/detail', {
+        params: {
+          id: this.$route.query.id
+        }
+      }).then((res) => {
+        const data = res.data
+        if (data.code === 0) {
+          this.item = data.data
+        }
+      })
+    } else {
+      this.$axios.get('/invite/friend/detail', {
+        params: {
+          id: this.$route.query.id,
+          userId: this.$store.state.userId
+        }
+      }).then((res) => {
+        const data = res.data
+        if (data.code === 0) {
+          this.item = data.data
+        }
+      })
+    }
   },
   methods: {
     accept () {
-      if (this.item.isAccepted === null) {
-        this.$axios.get('/invite/friend/accept', {
-          params: {
-            id: this.$route.query.id
-          }
-        }).then((res) => {
-          const data = res.data
-          if (data.code === 0) {
-            this.$router.go(-1)
-          }
-        })
+      if (typeof this.item.isAccepted == 'undefined' || this.item.isAccepted === null) {//eslint-disable-line
+        if (this.$route.query.isGroup) {
+          this.$axios.get('/apply/group/accept', {
+            params: {
+              id: this.$route.query.id
+            }
+          }).then((res) => {
+            const data = res.data
+            if (data.code === 0) {
+              this.$router.go(-1)
+            }
+          })
+        } else {
+          this.$axios.get('/invite/friend/accept', {
+            params: {
+              id: this.$route.query.id
+            }
+          }).then((res) => {
+            const data = res.data
+            if (data.code === 0) {
+              this.$router.go(-1)
+            }
+          })
+        }
       }
     },
     reject () {
-      if (this.item.isAccepted === null) {
-        this.$axios.get('/invite/friend/reject', {
-          params: {
-            id: this.$route.query.id
-          }
-        }).then((res) => {
-          const data = res.data
-          if (data.code === 0) {
-            this.$router.go(-1)
-          }
-        })
+      if (typeof this.item.isAccepted == 'undefined' || this.item.isAccepted === null) {//eslint-disable-line
+        if (this.$route.query.isGroup) {
+          this.$axios.get('/apply/group/reject', {
+            params: {
+              id: this.$route.query.id
+            }
+          }).then((res) => {
+            const data = res.data
+            if (data.code === 0) {
+              this.$router.go(-1)
+            }
+          })
+        } else {
+          this.$axios.get('/invite/friend/reject', {
+            params: {
+              id: this.$route.query.id
+            }
+          }).then((res) => {
+            const data = res.data
+            if (data.code === 0) {
+              this.$router.go(-1)
+            }
+          })
+        }
+      }
+    },
+    checkme () {
+      if (typeof this.item.isAccepted == 'undefined' || this.item.isAccepted === null) {//eslint-disable-line
+        if (this.$route.query.isGroup) {
+          return this.item.userId !== this.$store.state.userId
+        } else {
+          return this.item.receiverId === this.$store.state.userId
+        }
       }
     }
   }

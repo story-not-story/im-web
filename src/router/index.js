@@ -6,8 +6,10 @@ import Search from '../views/Search.vue'
 import Me from '../views/Me.vue'
 import Relation from '../views/Relation.vue'
 import Label from 'components/Label.vue'
+import NamedGroup from 'components/NamedGroup.vue'
 import Friendv from '../views/Friendv.vue'
 import Invitation from 'components/Invitation.vue'
+import LabelList from 'components/LabelList.vue'
 import Group from 'components/Group.vue'
 import User from '../views/User.vue'
 import Groupv from '../views/Groupv.vue'
@@ -47,6 +49,16 @@ const routes = [
     path: '/creategroup',
     name: 'CreateGroup',
     component: CreateGroup
+  },
+  {
+    path: '/namedgroup',
+    name: 'NamedGroup',
+    component: NamedGroup
+  },
+  {
+    path: '/labellist',
+    name: 'LabelList',
+    component: LabelList
   },
   {
     path: '/relation',

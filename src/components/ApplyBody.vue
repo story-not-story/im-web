@@ -1,6 +1,6 @@
 <template>
   <div class="applybody">
-    <form>
+    <div>
       <div class="info border-bottom">
         <label class="label">验证信息</label>
         <input v-model.lazy="message" class="content" type="text" value="我是胡君">
@@ -30,7 +30,7 @@
         </div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
-    </form>
+    </div>
   </div>
 </template>
 <script>
@@ -46,7 +46,7 @@ export default {
     }
   },
   created () {
-    Bus.$on('submitapply', this.handleSend)
+    Bus.$on('submitapply', this.handleform)
     this.$axios.get('/label', {
       params: {
         userId: this.$store.state.userId
@@ -59,19 +59,32 @@ export default {
     })
   },
   methods: {
-    handleSend () {
-      this.$axios.post('/invite/friend', {
-        senderId: this.$store.state.userId,
-        receiverId: this.$route.query.receiverId,
-        labelId: this.selected,
-        message: this.message,
-        remark: this.remark
-      }).then((res) => {
-        const data = res.data
-        if (data.code === 0) {
-          this.$router.go(-1)
-        }
-      })
+    handleform () {
+      if (this.$route.query.isGroup) {
+        this.$axios.post('/apply/group', {
+          userId: this.$store.state.userId,
+          groupId: this.$route.query.receiverId,
+          message: this.message
+        }).then((res) => {
+          const data = res.data
+          if (data.code === 0) {
+            this.$router.go(-1)
+          }
+        })
+      } else {
+        this.$axios.post('/invite/friend', {
+          senderId: this.$store.state.userId,
+          receiverId: this.$route.query.receiverId,
+          labelId: this.selected,
+          message: this.message,
+          remark: this.remark
+        }).then((res) => {
+          const data = res.data
+          if (data.code === 0) {
+            this.$router.go(-1)
+          }
+        })
+      }
     }
   }
 }

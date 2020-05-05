@@ -1,15 +1,46 @@
 <template>
   <div class="invitationlist" ref="wrapper">
     <div class="first-child">
-      <div class="letter">近三天</div>
-      <div class="friend" v-for="item in list" :key="item.id" @click="handleClick(item.id)">
+      <div class="letter">好友申请</div>
+      <div class="friend" v-for="item in friendlist" :key="item.id" @click="handleClick(item.id, false)">
         <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
         <div class="desc border-topbottom">
           <div class="info">
             <div class="remark" v-text="item.remark">胡君</div>
             <div class="word" v-text="item.message">我是胡君，有事找你</div>
           </div>
-          <div class="result" v-text="item.isAccepted === null ? '待处理' : item.isAccepted === true ? '已同意' : (item.isAccepted === false ? '已拒绝' : '待处理')">已添加</div>
+          <div class="result" v-text="item.isAccepted === true ? '已同意' : (item.isAccepted === false ? '已拒绝' : '待处理')">已添加</div>
+        </div>
+      </div>
+      <div class="letter">todo好友申请</div>
+      <div class="friend" v-for="item in todofriendlist" :key="item.id" @click="handleClick(item.id, false)">
+        <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
+        <div class="desc border-topbottom">
+          <div class="info">
+            <div class="remark" v-text="item.remark">胡君</div>
+            <div class="word" v-text="item.message">我是胡君，有事找你</div>
+          </div>
+          <div class="result" v-text="item.isAccepted === true ? '已同意' : (item.isAccepted === false ? '已拒绝' : '待处理')">已添加</div>
+        </div>
+      </div>
+      <div class="letter">群申请</div>
+      <div class="friend" v-for="item in grouplist" :key="item.id" @click="handleClick(item.id, true)">
+        <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
+        <div class="desc border-topbottom">
+          <div class="info">
+            <div class="word" v-text="item.message">我是胡君，有事找你</div>
+          </div>
+          <div class="result" v-text="item.isAccepted === true ? '已同意' : (item.isAccepted === false ? '已拒绝' : '待处理')">已添加</div>
+        </div>
+      </div>
+      <div class="letter">todo群申请</div>
+      <div class="friend" v-for="item in todogrouplist" :key="item.id" @click="handleClick(item.id, true)">
+        <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
+        <div class="desc border-topbottom">
+          <div class="info">
+            <div class="word" v-text="item.message">我是胡君，有事找你</div>
+          </div>
+          <div class="result" v-text="item.isAccepted === true ? '已同意' : (item.isAccepted === false ? '已拒绝' : '待处理')">已添加</div>
         </div>
       </div>
     </div>
@@ -21,7 +52,10 @@ export default {
   name: 'Invitation',
   data () {
     return {
-      list: []
+      friendlist: [],
+      todofriendlist: [],
+      grouplist: [],
+      todogrouplist: []
     }
   },
   created () {
@@ -32,7 +66,19 @@ export default {
     }).then((res) => {
       const data = res.data
       if (data.code === 0) {
-        this.list = data.data
+        this.friendlist = data.data.invitationList
+        this.todofriendlist = data.data.todoList
+      }
+    })
+    this.$axios.get('/apply/group/list', {
+      params: {
+        userId: this.$store.state.userId
+      }
+    }).then((res) => {
+      const data = res.data
+      if (data.code === 0) {
+        this.grouplist = data.data.applyList
+        this.todogrouplist = data.data.toDoList
       }
     })
   },
@@ -48,8 +94,8 @@ export default {
     })
   },
   methods: {
-    handleClick (id) {
-      this.$router.push({ path: '/apply/detail', query: { id: id } })
+    handleClick (id, isGroup) {
+      this.$router.push({ path: '/apply/detail', query: { id: id, isGroup: isGroup } })
     }
   }
 }

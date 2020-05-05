@@ -115,19 +115,16 @@ export default {
         align-items: center
         padding: 0 .1rem
         .search-icon2
-          float: left
-          width: 8%
+          flex: 2
         .text
-          flex: 1
+          flex: 21
           height: .7rem
           margin-right: 5%
           font-size: .32rem
         .clear-icon
-          width: 8%
-          float: right
+          flex: 2
       .input-right
         width: 1rem
-        float: right
         font-size: .4rem
         line-height: .8rem
 </style>

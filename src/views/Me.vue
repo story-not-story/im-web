@@ -1,18 +1,18 @@
 <template>
   <div class="me">
-    <MeHeader></MeHeader>
+    <MR></MR>
     <MeInfo></MeInfo>
     <Footer></Footer>
   </div>
 </template>
 <script>
-import MeHeader from 'components/MeHeader.vue'
+import MR from 'components/MR.vue'
 import MeInfo from 'components/MeInfo.vue'
 import Footer from 'components/Footer.vue'
 export default {
   name: 'Me',
   components: {
-    MeHeader,
+    MR,
     MeInfo,
     Footer
   }

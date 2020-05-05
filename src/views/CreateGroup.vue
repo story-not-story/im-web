@@ -1,6 +1,6 @@
 <template>
   <div class="creategroup">
-    <CreateGroupHeader></CreateGroupHeader>
+    <LMR></LMR>
     <SearchInput></SearchInput>
     <GroupBtn></GroupBtn>
     <SelectFriend :letter="map"></SelectFriend>
@@ -9,11 +9,12 @@
 </template>
 <script>
 // @ is an alias to /src
-import CreateGroupHeader from 'components/CreateGroupHeader.vue'
+import LMR from 'components/LMR.vue'
 import SearchInput from 'components/SearchInput.vue'
 import GroupBtn from 'components/GroupBtn.vue'
 import Alphabet from 'components/Alphabet.vue'
 import SelectFriend from 'components/SelectFriend.vue'
+import Bus from '@/bus.js'
 export default {
   name: 'CreateGroup',
   data () {
@@ -23,7 +24,7 @@ export default {
     }
   },
   components: {
-    CreateGroupHeader,
+    LMR,
     SearchInput,
     GroupBtn,
     Alphabet,
@@ -37,7 +38,8 @@ export default {
     }).then((res) => {
       const data = res.data
       if (data.code === 0) {
-        this.map = data.data.letterMap
+        this.map = data.data
+        Bus.$emit('change-map', this.map)
       }
     })
   }

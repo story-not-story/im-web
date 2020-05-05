@@ -1,22 +1,22 @@
 <template>
   <div class="header">
-    <div class="iconfont left" @click="handleBack">取消</div>
-    <div class="mid" v-text="this.$route.query.isGroup ? '加群' : '加好友'">
-      加好友
+    <div class="iconfont left" @click="handleBack">&#xe622;</div>
+    <div class="mid">
+      <slot>发起群聊</slot>
     </div>
-    <div class="iconfont right" @click="handleSend">发送</div>
+    <div class="iconfont right" @click="handleCreate">创建</div>
   </div>
 </template>
 <script>
 import Bus from '@/bus.js'
 export default {
-  name: 'ApplyHeader',
+  name: 'UserHeader',
   methods: {
     handleBack () {
       this.$router.go(-1)
     },
-    handleSend () {
-      Bus.$emit('submitapply')
+    handleCreate () {
+      Bus.$emit('create-group')
     }
   }
 }

@@ -6,7 +6,7 @@
 </template>
 <script>
 export default {
-  name: 'CreateGroupHeader',
+  name: 'LM',
   methods: {
     back () {
       this.$router.go(-1)

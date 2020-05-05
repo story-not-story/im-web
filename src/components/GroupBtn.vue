@@ -1,7 +1,7 @@
 <template>
   <div class="groupbtn" ref="wrapper">
     <div class="first-child">
-      <div class="btn border-topbottom">选择一个群</div>
+      <div class="btn border-topbottom" @click="namedGroup">创建命名群</div>
       <div class="btn border-topbottom">面对面建群</div>
     </div>
   </div>
@@ -14,6 +14,11 @@ export default {
   data () {
     return {
       img: require('img/yumizhou.jpeg')
+    }
+  },
+  methods: {
+    namedGroup () {
+      this.$router.push({ path: '/namedgroup' })
     }
   },
   mounted () {

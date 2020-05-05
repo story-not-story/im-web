@@ -104,6 +104,8 @@ export default {
                   this.captcha = ''
                   this.randomCaptcha()
                 }
+              } else if (data.code === 4) {
+                this.errormsg = '用户未注册'
               }
             })
           }

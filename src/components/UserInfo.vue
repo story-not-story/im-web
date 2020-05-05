@@ -1,5 +1,5 @@
 <template>
-  <div class="meinfo" ref="wrapper">
+  <div class="userinfo" ref="wrapper">
     <div class="first-child">
       <div class="me">
         <img class="img" alt="玉米粥" :src="$imgurl(user.avatar)"/>
@@ -31,27 +31,27 @@
       </Text> -->
       <div class="info border-bottom">
         <div class="label">个性签名</div>
-        <div class="content"><div class="text" v-text="user.signature"></div> <div class="iconfont icon">&#xe637;</div></div>
+        <div class="text" v-text="user.signature"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
       <div class="info border-bottom">
         <div class="label">生日</div>
-        <div class="content"><div class="text" v-text="user.birthdate"></div> <div class="iconfont icon">&#xe637;</div></div>
+        <div class="text" v-text="user.birthdate"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
       <div class="info border-bottom">
         <div class="label">年龄</div>
-        <div class="content"><div class="text" v-text="user.birthdate"></div> </div>
+        <div class="text" v-text="user.birthdate"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
       <div class="info border-bottom">
         <div class="label">性别</div>
-        <div class="content"><div class="text" v-text="user.sex ? 男 : 女"></div> <div class="iconfont icon">&#xe637;</div></div>
+        <div class="text" v-text="user.sex ? 男 : 女"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
       <div class="info border-bottom">
         <div class="label">电话</div>
-        <div class="content"><div class="text" v-text="user.phone"></div> <div class="iconfont icon">&#xe637;</div></div>
+        <div class="text" v-text="user.phone"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
     </div>
@@ -60,7 +60,7 @@
 <script>
 import BScroll from 'better-scroll'
 export default {
-  name: 'MeInfo',
+  name: 'UserInfo',
   data () {
     return {
       user: {}
@@ -105,7 +105,7 @@ export default {
   .border-bottom
     &:before
       border-color: $grey
-  .meinfo
+  .userinfo
     position: absolute
     overflow: hidden
     top: .8rem
@@ -121,9 +121,6 @@ export default {
       justify-content: space-between
       align-items: center
       color: $grey
-      .content
-        display: flex
-        // flex对于单个子标签的作用类似inline-box，此外布局
     .me
       display: flex
       width: 100%

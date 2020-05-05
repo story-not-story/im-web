@@ -17,7 +17,7 @@
     </router-link>
     <router-link to="/relation/invite">
       <div class="myicon">
-        <div :class="flag('/relation/invite')">新朋友</div>
+        <div :class="flag('/relation/invite')">申请</div>
       </div>
     </router-link>
   </div>

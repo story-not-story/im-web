@@ -58,17 +58,14 @@ export default {
       margin-left: .1rem
       padding: 0 .1rem
       .search-icon2
-        float: left
-        width: 8%
+        flex: 2
       .text
-        flex: 1
+        flex: 21
       .clear-icon
-        width: 8%
-        float: right
+        flex: 2
     .input-right
       text-align: center
       width: 1rem
-      float: right
       font-size: .4rem
       line-height: .8rem
 </style>

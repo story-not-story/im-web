@@ -1,7 +1,7 @@
 <template>
   <div class="friendlist" ref="wrapper">
     <div class="first-child">
-      <div class="friend border-topbottom" v-for="item in list" :key="item.id">
+      <div class="friend border-topbottom" v-for="item in list" :key="item.id" @click="handleClick(item.id)">
         <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
         <div class="desc">
           <div class="remark" v-text="item.name">胡君</div>
@@ -18,11 +18,22 @@ export default {
   name: 'SearchContent',
   data () {
     return {
-      list: []
+      list: [],
+      flag: true
+    }
+  },
+  methods: {
+    handleClick (id) {
+      if (this.flag) {
+        this.$router.push({ path: '/user', query: { userId: id } })
+      } else {
+        this.$router.push({ path: '/groupinfo', query: { groupId: id } })
+      }
     }
   },
   created () {
     Bus.$on('search', (text, flag) => {
+      this.flag = flag
       if (flag) {
         this.$axios.get('/list', {
           params: {

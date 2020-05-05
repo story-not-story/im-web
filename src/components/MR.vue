@@ -6,7 +6,7 @@
 </template>
 <script>
 export default {
-  name: 'MeHeader',
+  name: 'MR',
   methods: {
     logout () {
       this.$axios.get('/logout')

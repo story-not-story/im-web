@@ -2,7 +2,7 @@
   <div class="msglist" ref="msgbox" :style="{bottom: bottom + 'rem'}">
     <div class="first-child" @click="hide">
       <div class="msg" @contextmenu.prevent @touchstart="gotouchstart(item, index)" @touchmove="gotouchmove" v-for="(item,index) in msglist" :key="item.id" :ref="item.id" :data-index="index" :style="{ 'flex-direction': item.senderId === $store.state.userId ? 'row-reverse' : 'row' }">
-        <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
+        <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)" @click.stop="userinfo(item.senderId)"/>
         <div class="word" v-text="item.content">一起吃个饭吧1</div>
       </div>
       <div class="menu" v-show="menushow">
@@ -134,6 +134,13 @@ export default {
         console.log('copy fail')
       })
       this.menushow = false
+    },
+    userinfo (userId) {
+      if (userId === this.$store.state.userId) {
+        this.$router.push({ path: '/me' })
+      } else {
+        this.$router.push({ path: '/user', query: { userId: userId } })
+      }
     }
   }
 }

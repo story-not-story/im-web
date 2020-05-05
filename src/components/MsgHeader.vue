@@ -20,7 +20,6 @@ export default {
   .header
     height: .8rem
     align-items: center
-    line-height: $height
     background-color: $bgcolor
     background-image: linear-gradient(to right, rgba(93, 211, 250, 1), rgba(69, 168, 248, 1))
     color: #fff
@@ -31,8 +30,8 @@ export default {
       flex: 1
     .left
       padding-left: $pl
-      float: left
+      width: .7rem
     .right
-      float: right
+      width: .7rem
       padding-right: $pl
 </style>

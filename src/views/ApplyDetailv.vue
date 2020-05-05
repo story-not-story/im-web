@@ -1,22 +1,16 @@
 <template>
   <div class="applydetail">
-    <CreateGroupHeader>好友申请</CreateGroupHeader>
+    <LM>{{this.$route.query.isGroup ? '群申请' : '好友申请'}}</LM>
     <ApplyDetail></ApplyDetail>
   </div>
 </template>
 <script>
-import CreateGroupHeader from 'components/CreateGroupHeader.vue'
+import LM from 'components/LM.vue'
 import ApplyDetail from 'components/ApplyDetail.vue'
 export default {
   name: 'ApplyDetailv',
-  data () {
-    return {
-      item: {},
-      img: require('img/yumizhou.jpeg')
-    }
-  },
   components: {
-    CreateGroupHeader,
+    LM,
     ApplyDetail
   }
 }
