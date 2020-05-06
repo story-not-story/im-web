@@ -6,8 +6,8 @@
   </div>
 </template>
 <script>
-import ApplyHeader from 'components/ApplyHeader'
-import ApplyBody from 'components/ApplyBody'
+import ApplyHeader from './components/ApplyHeader'
+import ApplyBody from './components/ApplyBody'
 export default {
   name: 'Apply',
   components: {

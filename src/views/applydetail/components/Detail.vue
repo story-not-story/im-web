@@ -20,7 +20,7 @@
 </template>
 <script>
 export default {
-  name: 'ApplyDetail',
+  name: 'Detail',
   data () {
     return {
       item: {}

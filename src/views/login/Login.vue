@@ -5,8 +5,8 @@
   </div>
 </template>
 <script>
-import LoginHeader from 'components/LoginHeader.vue'
-import LoginContent from 'components/LoginContent.vue'
+import LoginHeader from './components/LoginHeader.vue'
+import LoginContent from './components/LoginContent.vue'
 export default {
   name: 'Login',
   components: {

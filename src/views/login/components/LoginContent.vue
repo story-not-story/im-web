@@ -128,7 +128,7 @@ export default {
       right: 0
       top: 1.6rem
       bottom: 0
-      background-image: url(../assets/img/yumizhou.jpeg)
+      background-image: url(../../../assets/yumizhou.jpeg)
       background-repeat:no-repeat
       background-size:100% 100%
       .form

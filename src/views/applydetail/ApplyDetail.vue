@@ -1,17 +1,17 @@
 <template>
   <div class="applydetail">
     <LM>{{this.$route.query.isGroup ? '群申请' : '好友申请'}}</LM>
-    <ApplyDetail></ApplyDetail>
+    <Detail></Detail>
   </div>
 </template>
 <script>
-import LM from 'components/LM.vue'
-import ApplyDetail from 'components/ApplyDetail.vue'
+import LM from './components/LM.vue'
+import Detail from './components/Detail.vue'
 export default {
-  name: 'ApplyDetailv',
+  name: 'ApplyDetail',
   components: {
     LM,
-    ApplyDetail
+    Detail
   }
 }
 </script>

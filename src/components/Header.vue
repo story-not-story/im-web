@@ -12,7 +12,7 @@
       <router-link to="/search">
         <li class="iconfont item">&#xe649; 加好友/群</li>
       </router-link>
-      <router-link to="/labellist">
+      <router-link to="/labelmanage">
         <li class="iconfont item">&#xe60d; 管理分组</li>
       </router-link>
     </ul>

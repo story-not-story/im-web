@@ -11,11 +11,6 @@ import BScroll from 'better-scroll'
 // import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'GroupBtn',
-  data () {
-    return {
-      img: require('img/yumizhou.jpeg')
-    }
-  },
   methods: {
     namedGroup () {
       this.$router.push({ path: '/namedgroup' })

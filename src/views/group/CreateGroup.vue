@@ -1,32 +1,34 @@
 <template>
-  <div class="friendv">
-<!--     <Header></Header>
-    <Menu></Menu> -->
-    <Friend :letter="map"></Friend>
+  <div class="creategroup">
+    <LMR></LMR>
+    <SearchInput></SearchInput>
+    <GroupBtn></GroupBtn>
+    <SelectFriend :letter="map"></SelectFriend>
     <Alphabet :letter="map"></Alphabet>
-<!--     <Footer></Footer> -->
   </div>
 </template>
 <script>
-import Bus from '@/bus.js'
-import Friend from 'components/Friend.vue'
-// import Menu from 'components/Menu.vue'
-// import Footer from 'components/Footer.vue'
-// import Header from 'components/Header.vue'
+// @ is an alias to /src
+import LMR from 'components/LMR.vue'
+import SearchInput from './components/SearchInput.vue'
+import GroupBtn from './components/GroupBtn.vue'
 import Alphabet from 'components/Alphabet.vue'
+import SelectFriend from './components/SelectFriend.vue'
+import Bus from '@/bus.js'
 export default {
-  name: 'Friendv',
+  name: 'CreateGroup',
   data () {
     return {
+      title: '发起群聊',
       map: {}
     }
   },
   components: {
-    Friend,
-    Alphabet
-    // Footer,
-    // Header,
-    // Menu
+    LMR,
+    SearchInput,
+    GroupBtn,
+    Alphabet,
+    SelectFriend
   },
   created () {
     this.$axios.get('/friend/list', {

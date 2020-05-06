@@ -6,9 +6,9 @@
   </div>
 </template>
 <script>
-import MsgHeader from 'components/MsgHeader'
-import MsgContent from 'components/MsgContent'
-import MsgFooter from 'components/MsgFooter'
+import MsgHeader from './components/MsgHeader'
+import MsgContent from './components/MsgContent'
+import MsgFooter from './components/MsgFooter'
 export default {
   name: 'Message',
   components: {

@@ -1,23 +1,21 @@
 <template>
   <div class="namedgroup">
     <LMR></LMR>
-    <div>
-      <div class="info border-bottom">
-        <label class="label">名称</label>
-        <input v-model.lazy="name" class="content" type="text" value="我是胡君">
-        <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
-      </div>
-      <div class="info border-bottom">
-        <label class="label">签名</label>
-        <input v-model.lazy="signature" class="content" type="text" value="我是胡君">
-        <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
-      </div>
+    <div class="info border-bottom">
+      <label class="label">名称</label>
+      <input v-model.lazy="name" class="content" type="text" value="我是胡君">
+      <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
+    </div>
+    <div class="info border-bottom">
+      <label class="label">签名</label>
+      <input v-model.lazy="signature" class="content" type="text" value="我是胡君">
+      <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
     </div>
   </div>
 </template>
 <script>
 import Bus from '@/bus.js'
-import LMR from 'components/LMR.vue'
+import LMR from 'components/LMR'
 export default {
   name: 'NamedGroup',
   components: {
@@ -85,7 +83,4 @@ export default {
         .item
           text-align: center
           background-color: #FFF
-    // .content
-    //   display: flex
-      // flex对于单个子标签的作用类似inline-box，此外还有布局效果
 </style>

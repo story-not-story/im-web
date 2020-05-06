@@ -7,8 +7,8 @@
 </template>
 <script>
 import UserHeader from 'components/UserHeader.vue'
-import UserInfo from 'components/UserInfo.vue'
-import UserFooter from 'components/UserFooter.vue'
+import UserInfo from './components/UserInfo.vue'
+import UserFooter from './components/UserFooter.vue'
 export default {
   name: 'User',
   components: {

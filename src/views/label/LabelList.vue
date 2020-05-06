@@ -1,16 +1,19 @@
 <template>
-  <div class="group" ref="wrapper">
+  <div class="label" ref="wrapper">
     <div class="first-child">
-      <div v-for="(value,name,index) in map" :key="index">
+      <div :key="label.id" v-for="(label,index) in labelList">
         <div class="title" @click="handleClick(index)"><!--v-text会覆盖掉标签内所有内容，如果标签内有标签，用{{}}-->
           <span class="iconfont" v-if="showlist[index]">&#xe6aa;</span>
           <span class="iconfont" v-else>&#xe69b;</span>
-          {{name}}
+          {{label.name}}
         </div>
         <div class="dropdown" v-show="showlist[index]">
-          <div class="friend" @click="handleMsg(item.id)" v-for="item in value" :key="item.id">
-            <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
-            <div class="desc border-topbottom" v-text="item.name">南邮计软</div>
+          <div class="friend" @click="handleFriend(friend.friendId)" v-for="friend in label.friendList" :key="friend.friendId">
+            <img class="img" alt="玉米粥" :src="$imgurl(friend.avatar)"/>
+            <div class="desc border-topbottom">
+              <div class="remark" v-text="friend.remark">胡君</div>
+              <div class="word" v-text="friend.signature">[手机在线] 不惧风雨前进</div>
+            </div>
           </div>
         </div>
       </div>
@@ -21,30 +24,37 @@
 import BScroll from 'better-scroll'
 import Vue from 'vue'
 export default {
-  name: 'Group',
+  name: 'LabelList',
   data () {
     return {
-      map: {},
-      showlist: [false, false, false]
+      showlist: [],
+      labelList: []
     }
   },
   methods: {
     handleClick (index) {
       Vue.set(this.showlist, index, !this.showlist[index])
     },
-    handleMsg (id) {
-      this.$router.push({ path: '/message', query: { isGroup: true, otherId: id } })
+    handleFriend (friendId) {
+      this.$router.push({
+        path: '/user',
+        query: {
+          userId: friendId
+        }
+      })
     }
   },
   created () {
-    this.$axios.get('/group', {
+    this.$axios.get('/label/friendlist', {
       params: {
         userId: this.$store.state.userId
       }
     }).then((res) => {
       const data = res.data
       if (data.code === 0) {
-        this.map = data.data
+        this.labelList = data.data.labelList
+        const size = this.labelList.length
+        this.showlist = Array(size).fill(false)
       }
     })
   },
@@ -63,7 +73,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '~styles/variables.styl'
-  .group
+  .label
     position: absolute
     overflow: hidden
     top: 1.6rem
@@ -90,6 +100,11 @@ export default {
         .desc
           flex: 1
           padding-left: $pl
-          font-size: .5rem
-          line-height: 1.2rem
+          .remark
+            padding-top: .2rem
+            font-size: .5rem
+          .word
+            font-size: .2rem
+            padding-top: .1rem
+            color: $grey
 </style>

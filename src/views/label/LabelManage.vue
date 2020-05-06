@@ -22,7 +22,7 @@
 </template>
 <script>
 export default {
-  name: 'LabelList',
+  name: 'LabelManage',
   data () {
     return {
       list: [],

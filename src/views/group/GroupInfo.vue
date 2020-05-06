@@ -7,10 +7,10 @@
 </template>
 <script>
 import UserHeader from 'components/UserHeader.vue'
-import GroupInfo from 'components/GroupInfo.vue'
-import GroupFooter from 'components/GroupFooter.vue'
+import GroupInfo from './components/GroupInfo.vue'
+import GroupFooter from './components/GroupFooter.vue'
 export default {
-  name: 'Groupv',
+  name: 'GroupInfo',
   components: {
     UserHeader,
     GroupInfo,

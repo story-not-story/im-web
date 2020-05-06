@@ -1,23 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Login from '../views/Login.vue'
-import Search from '../views/Search.vue'
-import Me from '../views/Me.vue'
-import Relation from '../views/Relation.vue'
-import Label from 'components/Label.vue'
-import NamedGroup from 'components/NamedGroup.vue'
-import Friendv from '../views/Friendv.vue'
-import Invitation from 'components/Invitation.vue'
-import LabelList from 'components/LabelList.vue'
-import Group from 'components/Group.vue'
-import User from '../views/User.vue'
-import Groupv from '../views/Groupv.vue'
-import Message from '../views/Message.vue'
-import Apply from '../views/Apply.vue'
-import CreateGroup from '../views/CreateGroup.vue'
-import InnerSearch from '../views/InnerSearch.vue'
-import ApplyDetailv from '../views/ApplyDetailv.vue'
+import MsgList from '../views/msglist/MsgList.vue'
+import Login from '../views/login/Login.vue'
+import Search from '../views/search/Search.vue'
+import Me from '../views/user/Me.vue'
+import Relation from '../views/relation/Relation.vue'
+import LabelList from '../views/label/LabelList.vue'
+import NamedGroup from '../views/group/NamedGroup.vue'
+import FriendList from '../views/friend/FriendList.vue'
+import Invitation from '../views/invitation/Invitation.vue'
+import LabelManage from '../views/label/LabelManage.vue'
+import GroupList from '../views/group/GroupList.vue'
+import User from '../views/user/User.vue'
+import GroupInfo from '../views/group/GroupInfo.vue'
+import Message from '../views/msgdetail/Message.vue'
+import Apply from '../views/apply/Apply.vue'
+import CreateGroup from '../views/group/CreateGroup.vue'
+import InnerSearch from '../views/search/InnerSearch.vue'
+import ApplyDetail from '../views/applydetail/ApplyDetail.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -32,8 +32,8 @@ const routes = [
   },
   {
     path: '/home',
-    name: 'Home',
-    component: Home
+    name: 'MsgList',
+    component: MsgList
   },
   {
     path: '/search',
@@ -56,9 +56,9 @@ const routes = [
     component: NamedGroup
   },
   {
-    path: '/labellist',
-    name: 'LabelList',
-    component: LabelList
+    path: '/labelmanage',
+    name: 'LabelManage',
+    component: LabelManage
   },
   {
     path: '/relation',
@@ -67,13 +67,13 @@ const routes = [
     children: [
       {
         path: 'label',
-        name: 'Label',
-        component: Label
+        name: 'LabelList',
+        component: LabelList
       },
       {
         path: 'group',
-        name: 'Group',
-        component: Group
+        name: 'GroupList',
+        component: GroupList
       },
       {
         path: 'invite',
@@ -82,8 +82,8 @@ const routes = [
       },
       {
         path: '',
-        name: 'Friendv',
-        component: Friendv
+        name: 'FriendList',
+        component: FriendList
       }
     ]
   },
@@ -99,8 +99,8 @@ const routes = [
   },
   {
     path: '/groupinfo',
-    name: 'Groupv',
-    component: Groupv
+    name: 'GroupInfo',
+    component: GroupInfo
   },
   {
     path: '/message',
@@ -114,8 +114,8 @@ const routes = [
   },
   {
     path: '/apply/detail',
-    name: 'ApplyDetailv',
-    component: ApplyDetailv
+    name: 'ApplyDetail',
+    component: ApplyDetail
   }
 ]
 

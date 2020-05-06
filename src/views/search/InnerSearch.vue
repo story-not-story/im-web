@@ -6,8 +6,8 @@
 </template>
 <script>
 // @ is an alias to /src
-import InnerSearchHeader from 'components/InnerSearchHeader.vue'
-import SearchSum from 'components/SearchSum.vue'
+import InnerSearchHeader from './components/InnerSearchHeader.vue'
+import SearchSum from './components/SearchSum.vue'
 export default {
   name: 'InnerSearch',
   components: {

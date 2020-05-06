@@ -8,10 +8,10 @@
 <script>
 // @ is an alias to /src
 import Footer from 'components/Footer.vue'
-import Msg from 'components/Msg.vue'
+import Msg from './components/Msg.vue'
 import Header from 'components/Header.vue'
 export default {
-  name: 'Home',
+  name: 'MsgList',
   components: {
     Footer,
     Msg,
