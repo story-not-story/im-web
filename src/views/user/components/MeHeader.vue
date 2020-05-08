@@ -1,15 +1,19 @@
 <template>
   <div class="header">
-    <slot>发起群聊</slot>
-    <div class="iconfont right" @click="back">&#xe622;</div>
+    我的资料
+    <div class="iconfont right" @click="logout">&#xe605;</div>
   </div>
 </template>
 <script>
 export default {
-  name: 'LM',
+  name: 'MeHeader',
   methods: {
-    back () {
-      this.$router.go(-1)
+    logout () {
+      this.$axios.get('/logout')
+      this.$router.push('/login')
+      if (this.$ws.websocket) {
+        this.$ws.websocket.close()
+      }
     }
   }
 }
@@ -28,7 +32,7 @@ export default {
     .right
       position: absolute
       top: 0
-      left: .2rem
+      right: .2rem
       bottom: 0
       line-height: $height
 </style>

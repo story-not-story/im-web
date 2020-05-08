@@ -86,8 +86,6 @@ export default {
         senderId: this.$store.state.userId,
         receiverId: this.$route.query.otherId
       }
-      console.log('发送消息')
-      console.log(data)
       this.$ws.websocket.send(JSON.stringify(data))
       event.target.value = ''
     }

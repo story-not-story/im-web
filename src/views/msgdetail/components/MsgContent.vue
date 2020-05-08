@@ -43,14 +43,12 @@ export default {
       }
     })
     Bus.$on('pushmsg', (msg) => {
-      console.log(msg.status == 0)//eslint-disable-line
       if (msg.status === 0) {
         self.msglist.push(msg)
         this.$nextTick(() => {
           this.$refs.msgbox.scrollTop = this.$refs.msgbox.scrollHeight
         })
       } else {
-        console.log('ref')
         const index = self.$refs[msg.id][0].dataset.index
         self.msglist.splice(index, 1)
       }
@@ -58,11 +56,6 @@ export default {
     Bus.$on('refresh', () => self.getData())
     this.getData()
   },
-  // computed: {
-  //   length: function () {
-  //     return this.msglist.length
-  //   }
-  // },
   watch: {
     msglist: function (value, oldvalue) {
       if (value.length > oldvalue.length) {
@@ -121,7 +114,6 @@ export default {
       }).then((res) => {
         const data = res.data
         if (data.code === 0) {
-          console.log()
         }
       })
       this.msglist.splice(this.curMsgIndex, 1)

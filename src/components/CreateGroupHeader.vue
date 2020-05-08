@@ -10,7 +10,7 @@
 <script>
 import Bus from '@/bus.js'
 export default {
-  name: 'UserHeader',
+  name: 'CreateGroupHeader',
   methods: {
     handleBack () {
       this.$router.go(-1)

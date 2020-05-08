@@ -25,8 +25,6 @@ const ws = {
         if (e.data !== 'ok') {
           const resData = JSON.parse(e.data)
           if (resData.code === 0) {
-            console.log('收到消息')
-            console.log(resData)
             Bus.$emit('pushmsg', resData.data)
           } else if (resData.code === 21) {
             Bus.$emit('refresh')
@@ -42,7 +40,6 @@ const ws = {
           self.reconnet()
         }
       }
-      console.log(this.websocket)
     } else {
       alert('Not support websocket')
     }
@@ -70,8 +67,7 @@ const ws = {
       }
       self.websocket.send(JSON.stringify(data))
       self.serverTimeoutObj = setTimeout(function () {
-        // 心跳时间内收不到消息，主动触发连接关闭，开始重连
-        self.websocket.close()
+        self.websocket.close()// 心跳时间内收不到消息，主动触发连接关闭，开始重连
         self.reconnet()
       }, self.timeout)
     }, this.timeout)

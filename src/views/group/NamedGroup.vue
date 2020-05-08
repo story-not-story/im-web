@@ -1,6 +1,6 @@
 <template>
   <div class="namedgroup">
-    <LMR></LMR>
+    <CreateGroupHeader></CreateGroupHeader>
     <div class="info border-bottom">
       <label class="label">名称</label>
       <input v-model.lazy="name" class="content" type="text" value="我是胡君">
@@ -15,11 +15,11 @@
 </template>
 <script>
 import Bus from '@/bus.js'
-import LMR from 'components/LMR'
+import CreateGroupHeader from 'components/CreateGroupHeader'
 export default {
   name: 'NamedGroup',
   components: {
-    LMR
+    CreateGroupHeader
   },
   data () {
     return {

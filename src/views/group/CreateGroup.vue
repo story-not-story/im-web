@@ -1,6 +1,6 @@
 <template>
   <div class="creategroup">
-    <LMR></LMR>
+    <CreateGroupHeader></CreateGroupHeader>
     <SearchInput></SearchInput>
     <GroupBtn></GroupBtn>
     <SelectFriend :letter="map"></SelectFriend>
@@ -9,7 +9,7 @@
 </template>
 <script>
 // @ is an alias to /src
-import LMR from 'components/LMR.vue'
+import CreateGroupHeader from 'components/CreateGroupHeader.vue'
 import SearchInput from './components/SearchInput.vue'
 import GroupBtn from './components/GroupBtn.vue'
 import Alphabet from 'components/Alphabet.vue'
@@ -24,7 +24,7 @@ export default {
     }
   },
   components: {
-    LMR,
+    CreateGroupHeader,
     SearchInput,
     GroupBtn,
     Alphabet,

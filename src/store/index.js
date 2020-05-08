@@ -10,8 +10,7 @@ try {
 } catch (e) {}
 export default new Vuex.Store({
   state: {
-    userId: defaultUserId,
-    websoket: null
+    userId: defaultUserId
   },
   mutations: {
     changeUserId (state, userId) {
