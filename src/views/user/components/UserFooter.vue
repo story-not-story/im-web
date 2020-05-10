@@ -5,30 +5,44 @@
 <script>
 export default {
   name: 'UserFooter',
-  data () {
-    return {
-      isFriend: false
+  props: {
+    isFriend: {
+      type: Boolean,
+      default () {
+        return false
+      }
+    },
+    name: {
+      type: String,
+      default () {
+        return ''
+      }
     }
   },
-  created () {
-    this.$axios.get('/friend/isFriend', {
-      params: {
-        userId: this.$store.state.userId,
-        friendId: this.$route.query.userId
-      }
-    }).then((res) => {
-      const data = res.data
-      if (data.code === 0) {
-        this.isFriend = data.data.isFriend
-      }
-    })
-  },
+  // data () {
+  //   return {
+  //     isFriend: false
+  //   }
+  // },
+  // created () {
+  //   this.$axios.get('/friend/isFriend', {
+  //     params: {
+  //       userId: this.$store.state.userId,
+  //       friendId: this.$route.query.userId
+  //     }
+  //   }).then((res) => {
+  //     const data = res.data
+  //     if (data.code === 0) {
+  //       this.isFriend = data.data.isFriend
+  //     }
+  //   })
+  // },
   methods: {
     add () {
       this.$router.push({ path: '/apply', query: { isGroup: false, receiverId: this.$route.query.userId } })
     },
     msg () {
-      this.$router.push({ path: '/message', query: { isGroup: false, otherId: this.$route.query.userId } })
+      this.$router.push({ path: '/message', query: { isGroup: false, otherId: this.$route.query.userId, name: this.name } })
     }
   }
 }

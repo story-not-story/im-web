@@ -61,27 +61,35 @@
 import BScroll from 'better-scroll'
 export default {
   name: 'UserInfo',
-  data () {
-    return {
-      user: {}
+  props: {
+    user: {
+      type: Object,
+      default () {
+        return {}
+      }
     }
   },
-  created () {
-    let userId = this.$store.state.userId
-    if (this.$route.query.userId) {
-      userId = this.$route.query.userId
-    }
-    this.$axios.get('/userinfo', {
-      params: {
-        userId: userId
-      }
-    }).then((res) => {
-      const data = res.data
-      if (data.code === 0) {
-        this.user = data.data
-      }
-    })
-  },
+  // data () {
+  //   return {
+  //     user: {}
+  //   }
+  // },
+  // created () {
+  //   let userId = this.$store.state.userId
+  //   if (this.$route.query.userId) {
+  //     userId = this.$route.query.userId
+  //   }
+  //   this.$axios.get('/userinfo', {
+  //     params: {
+  //       userId: userId
+  //     }
+  //   }).then((res) => {
+  //     const data = res.data
+  //     if (data.code === 0) {
+  //       this.user = data.data
+  //     }
+  //   })
+  // },
   mounted () {
     this.$nextTick(() => {
       if (!this.scroll) {

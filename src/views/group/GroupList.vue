@@ -8,7 +8,7 @@
           {{name}}
         </div>
         <div class="dropdown" v-show="showlist[index]">
-          <div class="friend" @click="handleMsg(item.id)" v-for="item in value" :key="item.id">
+          <div class="friend" @click="handleMsg(item)" v-for="item in value" :key="item.id">
             <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
             <div class="desc border-topbottom" v-text="item.name">南邮计软</div>
           </div>
@@ -32,8 +32,8 @@ export default {
     handleClick (index) {
       Vue.set(this.showlist, index, !this.showlist[index])
     },
-    handleMsg (id) {
-      this.$router.push({ path: '/message', query: { isGroup: true, otherId: id } })
+    handleMsg (item) {
+      this.$router.push({ path: '/message', query: { isGroup: true, otherId: item.id, name: item.name } })
     }
   },
   created () {

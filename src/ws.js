@@ -9,7 +9,7 @@ const ws = {
   lock: false,
   creatWebSocket: function () {
     if ('WebSocket' in window) {
-      this.websocket = new WebSocket('ws://' + location.host + '/websocket/' + store.state.userId)
+      this.websocket = new WebSocket('ws://localhost:8080/websocket/' + store.state.userId)
       var self = this
       this.websocket.onerror = function (e) {
         console.log(e)

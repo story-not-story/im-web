@@ -1,8 +1,8 @@
 <template>
   <div class="user">
     <UserHeader>个人资料</UserHeader>
-    <UserInfo></UserInfo>
-    <UserFooter></UserFooter>
+    <UserInfo :user="user"></UserInfo>
+    <UserFooter :isFriend="isFriend" :name="name"></UserFooter>
   </div>
 </template>
 <script>
@@ -15,6 +15,41 @@ export default {
     UserHeader,
     UserInfo,
     UserFooter
+  },
+  data () {
+    return {
+      user: {},
+      isFriend: false,
+      name: ''
+    }
+  },
+  created () {
+    let userId = this.$store.state.userId
+    if (this.$route.query.userId) {
+      userId = this.$route.query.userId
+    }
+    this.$axios.get('/userinfo', {
+      params: {
+        userId: userId
+      }
+    }).then((res) => {
+      const data = res.data
+      if (data.code === 0) {
+        this.user = data.data
+      }
+    })
+    this.$axios.get('/friend/isFriend', {
+      params: {
+        userId: this.$store.state.userId,
+        friendId: this.$route.query.userId
+      }
+    }).then((res) => {
+      const data = res.data
+      if (data.code === 0) {
+        this.isFriend = data.data.isFriend
+        this.name = data.data.name
+      }
+    })
   }
 }
 </script>
