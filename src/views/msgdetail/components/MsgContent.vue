@@ -106,7 +106,7 @@ export default {
       this.menushow = false
     },
     del () {
-      this.$axios.get('/message/delete', {
+      this.$axios.delete('/message', {
         params: {
           id: this.curMsg.id,
           userId: this.$store.state.userId

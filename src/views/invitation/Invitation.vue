@@ -1,7 +1,7 @@
 <template>
   <div class="invitationlist" ref="wrapper">
     <div class="first-child">
-      <div class="letter">好友申请</div>
+      <div class="letter" v-if="friendlist.length > 0">好友申请</div>
       <div class="friend" v-for="item in friendlist" :key="item.id" @click="handleClick(item.id, false)">
         <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
         <div class="desc border-topbottom">
@@ -12,7 +12,7 @@
           <div class="result" v-text="item.isAccepted === true ? '已同意' : (item.isAccepted === false ? '已拒绝' : '待处理')">已添加</div>
         </div>
       </div>
-      <div class="letter">todo好友申请</div>
+      <div class="letter" v-if="todofriendlist.length > 0">todo好友申请</div>
       <div class="friend" v-for="item in todofriendlist" :key="item.id" @click="handleClick(item.id, false)">
         <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
         <div class="desc border-topbottom">
@@ -23,7 +23,7 @@
           <div class="result" v-text="item.isAccepted === true ? '已同意' : (item.isAccepted === false ? '已拒绝' : '待处理')">已添加</div>
         </div>
       </div>
-      <div class="letter">群申请</div>
+      <div class="letter" v-if="grouplist.length > 0">群申请</div>
       <div class="friend" v-for="item in grouplist" :key="item.id" @click="handleClick(item.id, true)">
         <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
         <div class="desc border-topbottom">
@@ -33,7 +33,7 @@
           <div class="result" v-text="item.isAccepted === true ? '已同意' : (item.isAccepted === false ? '已拒绝' : '待处理')">已添加</div>
         </div>
       </div>
-      <div class="letter">todo群申请</div>
+      <div class="letter" v-if="todogrouplist.length > 0">todo群申请</div>
       <div class="friend" v-for="item in todogrouplist" :key="item.id" @click="handleClick(item.id, true)">
         <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
         <div class="desc border-topbottom">

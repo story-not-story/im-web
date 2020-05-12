@@ -40,12 +40,14 @@ export default {
     },
     handleEnter () {
       if (this.text.trim() !== '') {
-        Bus.$emit('search', this.text, this.flag)
+        Bus.$emit('search', this.text)
       }
     },
     handleFlag (event) {
       if (this.flag ^ event.target.className === 'btn-left') {
         this.flag = !this.flag
+        this.text = ''
+        Bus.$emit('flag')
       }
     }
   },

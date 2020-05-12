@@ -57,7 +57,7 @@ export default {
         const size = this.map[key].length
         for (var i = 0; i < size; i++) {
           if (this.showmap[key][i]) {
-            list.push(this.map[key][i].id)
+            list.push(this.map[key][i].friendId)
           }
         }
       }

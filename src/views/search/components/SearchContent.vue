@@ -32,10 +32,14 @@ export default {
     }
   },
   created () {
-    Bus.$on('search', (text, flag) => {
-      this.flag = flag
-      if (flag) {
-        this.$axios.get('/list', {
+    const self = this
+    Bus.$on('flag', () => {
+      self.list = []
+      self.flag = !self.flag
+    })
+    Bus.$on('search', (text) => {
+      if (self.flag) {
+        self.$axios.get('/list', {
           params: {
             text: text
           }
@@ -43,14 +47,16 @@ export default {
           const data = res.data
           if (data.code === 0) {
             if (Array.isArray(data.data)) {
-              this.list = data.data
+              self.list = data.data
             } else {
-              this.$router.push({ path: '/user', query: { userId: data.data.id } })
+              self.$router.push({ path: '/user', query: { userId: data.data.id } })
             }
+          } else {
+            self.list = []
           }
         })
       } else {
-        this.$axios.get('/group/list', {
+        self.$axios.get('/group/list', {
           params: {
             text: text
           }
@@ -58,10 +64,12 @@ export default {
           const data = res.data
           if (data.code === 0) {
             if (Array.isArray(data.data)) {
-              this.list = data.data
+              self.list = data.data
             } else {
-              this.$router.push({ path: '/groupinfo', query: { groupId: data.data.id } })
+              self.$router.push({ path: '/groupinfo', query: { groupId: data.data.id } })
             }
+          } else {
+            self.list = []
           }
         })
       }

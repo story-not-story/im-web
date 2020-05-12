@@ -74,7 +74,7 @@ export default {
           this.errormsg = '密码不能为空'
         } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.password)) {
           this.errormsg = '密码不符合规则'
-        } else if (this.captcha !== this.identifyCode) {
+        } else if (this.captcha.toLowerCase() !== this.identifyCode.toLowerCase()) {
           this.errormsg = '验证码错误'
         } else {
           this.errormsg = ''

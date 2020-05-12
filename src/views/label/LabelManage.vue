@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="iconfont left" @click="handleBack">&#xe622;</div>
-      <div class="mid">分组管理</div>
+      <div class="mid">管理分组</div>
       <div class="iconfont right" @click="show = !show">&#xe879;</div>
       <!-- html属性、事件里访问本地data不加this，访问全局Vue要加this -->
     </div>
