@@ -23,11 +23,15 @@ const ws = {
         console.log(e)
         self.start()
         if (e.data !== 'ok') {
-          const resData = JSON.parse(e.data)
-          if (resData.code === 0) {
-            Bus.$emit('pushmsg', resData.data)
-          } else if (resData.code === 21) {
-            Bus.$emit('refresh')
+          if (e.data === 'blacklisted') {
+            Bus.$emit('pushmsg', 'blacklisted')
+          } else {
+            const resData = JSON.parse(e.data)
+            if (resData.code === 0) {
+              Bus.$emit('pushmsg', resData.data)
+            } else if (resData.code === 21) {
+              Bus.$emit('refresh')
+            }
           }
         }
       }

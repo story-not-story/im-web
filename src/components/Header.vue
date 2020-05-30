@@ -39,7 +39,7 @@ export default {
   .header
     color: #fff
     background-color: $bgcolor
-    height: .8rem
+    height: $height
     display: flex
     align-items: center
     background-image: linear-gradient(to right, rgba(93, 211, 250, 1), rgba(69, 168, 248, 1))
@@ -73,6 +73,6 @@ export default {
       text-align: left
       border-radius: .2rem
       .item
-        height: .8rem
-        line-height: .8rem
+        height: $height
+        line-height: $height
 </style>

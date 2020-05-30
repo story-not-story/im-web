@@ -4,6 +4,7 @@ import MsgList from '../views/msglist/MsgList.vue'
 import Login from '../views/login/Login.vue'
 import Search from '../views/search/Search.vue'
 import Me from '../views/user/Me.vue'
+import Password from '../views/user/Password.vue'
 import Relation from '../views/relation/Relation.vue'
 import LabelList from '../views/label/LabelList.vue'
 import NamedGroup from '../views/group/NamedGroup.vue'
@@ -18,6 +19,11 @@ import Apply from '../views/apply/Apply.vue'
 import CreateGroup from '../views/group/CreateGroup.vue'
 import InnerSearch from '../views/search/InnerSearch.vue'
 import ApplyDetail from '../views/applydetail/ApplyDetail.vue'
+import Setting from '../views/setting/Setting.vue'
+import ChatSetting from '../views/setting/ChatSetting.vue'
+import UserSetting from '../views/setting/UserSetting.vue'
+import GroupSetting from '../views/setting/GroupSetting.vue'
+import MsgSearch from '../views/msgsearch/MsgSearch.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -93,6 +99,11 @@ const routes = [
     component: Me
   },
   {
+    path: '/password',
+    name: 'Password',
+    component: Password
+  },
+  {
     path: '/user',
     name: 'User',
     component: User
@@ -106,6 +117,33 @@ const routes = [
     path: '/message',
     name: 'Message',
     component: Message
+  },
+  {
+    path: '/message/search',
+    name: 'MsgSearch',
+    component: MsgSearch
+  },
+  {
+    path: '/setting',
+    name: 'Setting',
+    component: Setting,
+    children: [
+      {
+        path: 'user',
+        name: 'UserSetting',
+        component: UserSetting
+      },
+      {
+        path: 'group',
+        name: 'GroupSetting',
+        component: GroupSetting
+      },
+      {
+        path: '',
+        name: 'ChatSetting',
+        component: ChatSetting
+      }
+    ]
   },
   {
     path: '/apply',

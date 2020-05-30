@@ -66,14 +66,14 @@ export default {
     background-image: linear-gradient(to right, rgba(93, 211, 250, 1), rgba(69, 168, 248, 1))
     color: #fff
     text-align: center
-    font-size: .5rem
+    font-size: $fz
     position: relative
     .left
       position: absolute
       left : 0
       top: 0
       height: 50%
-      line-height: .8rem
+      line-height: $height
     .mid
       height: 50%
       display: flex
@@ -128,5 +128,5 @@ export default {
       .input-right
         width: 1rem
         font-size: .4rem
-        line-height: .8rem
+        line-height: $height
 </style>

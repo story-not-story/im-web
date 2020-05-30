@@ -1,33 +1,40 @@
 <template>
   <div class="friendlist" ref="wrapper">
     <div class="first-child">
-      <div class="category">联系人</div>
-      <div class="friend border-topbottom" v-for="item in friendlist" :key="item.id">
-        <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
-        <div class="desc">
-          <div class="remark" v-text="item.name">胡君</div>
-          <div class="word" v-text="item.signature">[手机在线] 不惧风雨前进</div>
+      <div class="category" v-show="show" @click="handleBack">返回</div>
+      <div v-show="top3friend.length > 0">
+        <div class="category">好友</div>
+        <div class="friend border-topbottom" v-for="item in top3friend" :key="item.id" @click="$router.push({ path: '/message', query: { isGroup: false, otherId: item.friendId, name: item.name } })">
+          <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
+          <div class="desc">
+            <div class="remark" v-text="item.name">胡君</div>
+            <div class="word" v-text="item.signature">[手机在线] 不惧风雨前进</div>
+          </div>
         </div>
+        <div class="more iconfont" @click="handleClick(0)" v-show="!show">查看更多&#xe603;</div>
       </div>
-      <div class="more">查看更多&#xe603;</div>
-      <div class="category">群聊</div>
-      <div class="friend border-topbottom" v-for="item in grouplist" :key="item.id">
-        <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
-        <div class="desc">
-          <div class="remark" v-text="item.name">胡君</div>
-          <div class="word" v-text="item.signature">[手机在线] 不惧风雨前进</div>
+      <div v-show="top3group.length > 0">
+        <div class="category">群聊</div>
+        <div class="friend border-topbottom" v-for="item in top3group" :key="item.id" @click="$router.push({ path: '/message', query: { isGroup: true, otherId: item.id, name: item.name } })">
+          <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
+          <div class="desc">
+            <div class="remark" v-text="item.name">胡君</div>
+            <div class="word" v-text="item.signature">[手机在线] 不惧风雨前进</div>
+          </div>
         </div>
+        <div class="more iconfont" @click="handleClick(1)" v-show="!show">查看更多&#xe603;</div>
       </div>
-      <div class="more">查看更多&#xe603;</div>
-      <div class="category">消息</div>
-      <div class="friend border-topbottom" v-for="item in msglist" :key="item.id">
-        <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
-        <div class="desc">
-          <div class="remark" v-text="item.name">胡君</div>
-          <div class="word" v-text="item.content">[手机在线] 不惧风雨前进</div>
+      <div v-show="top3msg.length > 0">
+        <div class="category">消息</div>
+        <div class="friend border-topbottom" v-for="item in top3msg" :key="item.id" @click="$router.push({ path: '/message/search' })">
+          <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
+          <div class="desc">
+            <div class="remark" v-text="item.name">胡君</div>
+            <div class="word" v-text="item.msglist.length + '条'"></div>
+          </div>
         </div>
+        <div class="more iconfont" @click="handleClick(2)" v-show="!show">查看更多&#xe603;</div>
       </div>
-      <div class="more">查看更多&#xe603;</div>
     </div>
   </div>
 </template>
@@ -40,51 +47,100 @@ export default {
     return {
       friendlist: [],
       grouplist: [],
-      msglist: []
+      msglist: [],
+      top3friend: [],
+      top3group: [],
+      top3msg: [],
+      show: false
+    }
+  },
+  methods: {
+    handleClick (index) {
+      switch (index) {
+        case 0:
+          this.top3group = []
+          this.top3msg = []
+          this.top3friend = this.friendlist
+          break
+        case 1:
+          this.top3group = this.grouplist
+          this.top3msg = []
+          this.top3friend = []
+          break
+        case 2:
+          this.top3group = []
+          this.top3msg = this.msglist
+          this.top3friend = []
+          break
+      }
+      this.show = !this.show
+    },
+    handleBack () {
+      this.top3friend = this.friendlist.slice(0, 3)
+      this.top3group = this.grouplist.slice(0, 3)
+      this.top3msg = this.msglist.slice(0, 3)
+      this.show = !this.show
     }
   },
   created () {
+    const self = this
     Bus.$on('searchsum', (text) => {
+      self.friendlist = []
+      self.grouplist = []
+      self.msglist = []
+      self.show = false
       function getFriend (text) {
-        return this.$axios.get('/friend/search', {
+        return self.$axios.get('/friend/search', {
           params: {
-            userId: this.$store.state.userId,
+            userId: self.$store.state.userId,
             text: text
           }
         })
       }
 
       function getGroup (text) {
-        return this.$axios.get('/group/search', {
+        return self.$axios.get('/group/search', {
           params: {
-            userId: this.$store.state.userId,
+            userId: self.$store.state.userId,
             text: text
           }
         })
       }
 
       function getMsg (text) {
-        return this.$axios.get('/message/search', {
+        return self.$axios.get('/message/search', {
           params: {
-            userId: this.$store.state.userId,
+            userId: self.$store.state.userId,
             text: text
           }
         })
       }
 
-      this.$axios.all([getFriend(text), getGroup(text), getMsg(text)])
-        .then(this.$axios.spread(function (fres, gres, mres) {
+      self.$axios.all([getFriend(text), getGroup(text), getMsg(text)])
+        .then(self.$axios.spread(function (fres, gres, mres) {
           const fdata = fres.data
           const gdata = gres.data
           const mdata = mres.data
           if (fdata.code === 0) {
-            this.friendlist = fdata.data
+            self.friendlist = fdata.data
+            self.top3friend = self.friendlist.slice(0, 3)
+          } else {
+            self.friendlist = []
+            self.top3friend = []
           }
           if (gdata.code === 0) {
-            this.grouplist = gdata.data
+            self.grouplist = gdata.data
+            self.top3group = self.grouplist.slice(0, 3)
+          } else {
+            self.grouplist = []
+            self.top3group = []
           }
           if (mdata.code === 0) {
-            this.msglist = mdata.data
+            self.msglist = mdata.data
+            self.top3msg = self.msglist.slice(0, 3)
+          } else {
+            self.msglist = []
+            self.top3msg = []
           }
         }))
     })
@@ -116,6 +172,7 @@ export default {
     right: 0
     bottom: 0
     left: 0
+    font-size: .4rem
     .category
       padding: .1rem .1rem .1rem .2rem
     .more
@@ -136,7 +193,7 @@ export default {
         padding-left: $pl
         .remark
           padding-top: .2rem
-          font-size: .5rem
+          font-size: $fz
         .word
           font-size: .2rem
           padding-top: .1rem

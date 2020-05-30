@@ -42,7 +42,7 @@ export default {
     position: absolute
     top: .8rem
     width: 100%
-    height: .8rem
+    height: $height
     background: #fff
     .myicon
       width: 25%

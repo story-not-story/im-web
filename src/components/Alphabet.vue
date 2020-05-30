@@ -1,6 +1,6 @@
 <template>
   <div class="alphabet">
-      <div class="item" v-for="(value, name) in map" :key="name" v-text="name" @touchstart.prevent="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd" @click="handleLetterClick" :ref="name"></div>
+      <div class="item" v-for="name in list" :key="name" v-text="name" @touchstart.prevent="handleTouchStart" @touchmove="handleTouchMove" @touchend="handleTouchEnd" @click="handleLetterClick" :ref="name"></div>
   </div>
 </template>
 <script>
@@ -8,10 +8,10 @@ import Bus from '@/bus.js'
 export default {
   name: 'Alphabet',
   props: {
-    map: {
-      type: Object,
+    list: {
+      type: Array,
       default () {
-        return {}
+        return []
       }
     }
   },
@@ -26,8 +26,10 @@ export default {
     Bus.$on('change-map', this.changeMap)
   },
   updated () {
-    const a = Object.keys(this.map)[0]
-    this.startY = this.$refs[a][0].offsetTop
+    const a = this.list[0]
+    if (typeof a != 'undefined') {// eslint-disable-line
+      this.startY = this.$refs[a][0].offsetTop
+    }
   },
   methods: {
     handleLetterClick (e) {
@@ -44,8 +46,8 @@ export default {
         this.timer = setTimeout(() => {
           const touchY = e.touches[0].clientY - 86
           const index = Math.floor((touchY - this.startY) / 20)
-          if (index >= 0 && index < this.letters.length) {
-            Bus.$emit('changeletter', this.letters[index])
+          if (index >= 0 && index < this.list.length) {
+            Bus.$emit('changeletter', this.list[index])
           }
         }, 16)
       }
@@ -54,7 +56,7 @@ export default {
       this.touchStatus = false
     },
     changeMap (map) {
-      this.map = map
+      this.list = Object.keys(map)
     }
   }
 }

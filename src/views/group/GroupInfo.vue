@@ -1,18 +1,18 @@
 <template>
   <div class="user">
-    <UserHeader>群聊资料</UserHeader>
+    <LMHeader>群聊资料</LMHeader>
     <GroupInfo></GroupInfo>
     <GroupFooter></GroupFooter>
   </div>
 </template>
 <script>
-import UserHeader from 'components/UserHeader.vue'
+import LMHeader from 'components/LMHeader.vue'
 import GroupInfo from './components/GroupInfo.vue'
 import GroupFooter from './components/GroupFooter.vue'
 export default {
   name: 'GroupInfo',
   components: {
-    UserHeader,
+    LMHeader,
     GroupInfo,
     GroupFooter
   }

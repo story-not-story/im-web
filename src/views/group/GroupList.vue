@@ -33,7 +33,7 @@ export default {
       Vue.set(this.showlist, index, !this.showlist[index])
     },
     handleMsg (item) {
-      this.$router.push({ path: '/message', query: { isGroup: true, otherId: item.id, name: item.name } })
+      this.$router.push({ path: '/message', query: { isGroup: true, otherId: item.id } })
     }
   },
   created () {
@@ -90,6 +90,6 @@ export default {
         .desc
           flex: 1
           padding-left: $pl
-          font-size: .5rem
+          font-size: $fz
           line-height: 1.2rem
 </style>

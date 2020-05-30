@@ -24,7 +24,6 @@
         <div class="content">
           <select class="list" name="labellist" v-model="selected">
             <option class="item" value="">默认分组</option>
-            <option class="item" value="">1</option>
             <option class="item" v-for="item in labellsit"  :value="item.id" v-text="item.name" :key="item.id"></option>
           </select>
         </div>

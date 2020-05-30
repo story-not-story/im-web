@@ -11,12 +11,6 @@ export default {
       default () {
         return false
       }
-    },
-    name: {
-      type: String,
-      default () {
-        return ''
-      }
     }
   },
   // data () {
@@ -42,7 +36,7 @@ export default {
       this.$router.push({ path: '/apply', query: { isGroup: false, receiverId: this.$route.query.userId } })
     },
     msg () {
-      this.$router.push({ path: '/message', query: { isGroup: false, otherId: this.$route.query.userId, name: this.name } })
+      this.$router.push({ path: '/message', query: { isGroup: false, otherId: this.$route.query.userId } })
     }
   }
 }
@@ -53,10 +47,10 @@ export default {
     position: absolute
     bottom: 0
     width: 100%
-    height: .8rem
+    height: $height
     background: $bgcolor
     color: #fff
     text-align: center
     font-size: .6rem
-    line-height: .8rem
+    line-height: $height
 </style>

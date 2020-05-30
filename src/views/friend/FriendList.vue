@@ -3,7 +3,7 @@
 <!--     <Header></Header>
     <Menu></Menu> -->
     <Friend :letter="map"></Friend>
-    <Alphabet :letter="map"></Alphabet>
+    <Alphabet :letter="Object.keys(map)"></Alphabet>
 <!--     <Footer></Footer> -->
   </div>
 </template>

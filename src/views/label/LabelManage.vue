@@ -100,14 +100,14 @@ export default {
     &:before
       border-color: $grey
   .header
-    height: .8rem
+    height: $height
     align-items: center
     background-color: $bgcolor
     background-image: linear-gradient(to right, rgba(93, 211, 250, 1), rgba(69, 168, 248, 1))
     color: #fff
     text-align: center
     display: flex
-    font-size: .5rem
+    font-size: $fz
     .mid
       flex: 1
     .left

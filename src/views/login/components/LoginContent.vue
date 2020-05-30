@@ -70,6 +70,8 @@ export default {
       } else {
         if (this.id === '') {
           this.errormsg = this.flag ? 'IM号不能为空' : '昵称不能为空'
+        } else if (this.id.length > 18 && !this.flag) {
+          this.errormsg = '昵称长度必须小于等于18'
         } else if (this.password === '') {
           this.errormsg = '密码不能为空'
         } else if (!/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(this.password)) {
@@ -104,8 +106,8 @@ export default {
                   this.captcha = ''
                   this.randomCaptcha()
                 }
-              } else if (data.code === 4) {
-                this.errormsg = '用户未注册'
+              } else {
+                this.errormsg = data.msg
               }
             })
           }
@@ -140,7 +142,7 @@ export default {
         position: relative
         top: 50%
         transform: translateY(-50%)
-        font-size: .5rem
+        font-size: $fz
         .error
           color: red
           text-align: center

@@ -26,8 +26,9 @@ axios.defaults.baseURL = '/api' // 配合 proxyTable配置实现跨域请求的�
 // axios.defaults.baseURL = 'http://localhost:8081'
 axios.defaults.withCredentials = true
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.interceptors.request.use(function (config) {
-  if (config.method === 'post') {
+  if (config.headers['Content-Type'] !== 'multipart/form-data' && (config.method === 'post' || config.method === 'put')) {
     config.data = qs.stringify({ ...config.data })
   }
   return config

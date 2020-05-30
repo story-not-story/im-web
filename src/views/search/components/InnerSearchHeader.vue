@@ -67,5 +67,5 @@ export default {
       text-align: center
       width: 1rem
       font-size: .4rem
-      line-height: .8rem
+      line-height: $height
 </style>

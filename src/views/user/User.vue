@@ -1,12 +1,12 @@
 <template>
   <div class="user">
-    <UserHeader>个人资料</UserHeader>
+    <UserHeader :isFriend="isFriend">个人资料</UserHeader>
     <UserInfo :user="user"></UserInfo>
-    <UserFooter :isFriend="isFriend" :name="name"></UserFooter>
+    <UserFooter :isFriend="isFriend"></UserFooter>
   </div>
 </template>
 <script>
-import UserHeader from 'components/UserHeader.vue'
+import UserHeader from './components/UserHeader.vue'
 import UserInfo from './components/UserInfo.vue'
 import UserFooter from './components/UserFooter.vue'
 export default {
@@ -19,8 +19,7 @@ export default {
   data () {
     return {
       user: {},
-      isFriend: false,
-      name: ''
+      isFriend: false
     }
   },
   created () {
@@ -47,7 +46,6 @@ export default {
       const data = res.data
       if (data.code === 0) {
         this.isFriend = data.data.isFriend
-        this.name = data.data.name
       }
     })
   }

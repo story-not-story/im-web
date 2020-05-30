@@ -4,7 +4,7 @@
     <SearchInput></SearchInput>
     <GroupBtn></GroupBtn>
     <SelectFriend :letter="map"></SelectFriend>
-    <Alphabet :letter="map"></Alphabet>
+    <Alphabet :letter="Object.keys(map)"></Alphabet>
   </div>
 </template>
 <script>

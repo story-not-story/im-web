@@ -147,12 +147,12 @@ export default {
     .validate
       display: flex
       align-items: center
-      height: .8rem
+      height: $height
       .label
         color: $grey
         margin-right: .3rem
     .btn
-      height: .8rem
+      height: $height
       display: flex
       justify-content: space-around
       align-items: center

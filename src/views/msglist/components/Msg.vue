@@ -31,8 +31,7 @@ export default {
         query: {
           isGroup: item.isGroup,
           otherId: item.receiverId === this.$store.state.userId ? item.senderId : item.receiverId,
-          userId: this.$store.state.userId,
-          name: item.name
+          userId: this.$store.state.userId
         }
       })
     },
@@ -81,6 +80,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '~styles/variables.styl'
+@import '~styles/mixins.styl'
   .border-topbottom
     &:before
       border-color: $grey
@@ -116,6 +116,7 @@ export default {
             align-items: baseline
             .remark
               font-size: .6rem
+              ellipsis()
             .time
               padding-right: .1rem
               color: $grey

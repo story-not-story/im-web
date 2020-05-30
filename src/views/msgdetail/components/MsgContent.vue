@@ -3,7 +3,14 @@
     <div class="first-child" @click="hide">
       <div class="msg" @contextmenu.prevent @touchstart="gotouchstart(item, index)" @touchmove="gotouchmove" v-for="(item,index) in msglist" :key="item.id" :ref="item.id" :data-index="index" :style="{ 'flex-direction': item.senderId === $store.state.userId ? 'row-reverse' : 'row' }">
         <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)" @click.stop="userinfo(item.senderId)"/>
-        <div class="word" v-text="item.content">一起吃个饭吧1</div>
+        <div class="wrapper" v-if="$route.query.isGroup" :style="{ 'align-items': item.senderId === $store.state.userId ? 'flex-end' : 'flex-start' }">
+          <div class="name" v-text="item.name"></div>
+          <div class="word" v-text="item.content">一起吃个饭吧1</div>
+        </div>
+        <div v-else class="word" v-text="item.content">一起吃个饭吧1</div>
+      </div>
+      <div class="msg" v-show="show">
+        <div class="blacklisted">你已被对方拉黑，无法发送消息！</div>
       </div>
       <div class="menu" v-show="menushow">
         <div class="btn border-right" @click.stop="cancel" v-if="menushow && curMsg.senderId === $store.state.userId">撤回</div>
@@ -27,7 +34,8 @@ export default {
       timeOutEvent: null,
       menushow: false,
       curMsg: null,
-      curMsgIndex: ''
+      curMsgIndex: '',
+      show: false
     }
   },
   created () {
@@ -35,18 +43,28 @@ export default {
     Bus.$on('change-height', () => {
       if (self.bottom === 0.8) {
         self.bottom = 2.4
-        this.$nextTick(() => {
-          this.$refs.msgbox.scrollTop = this.$refs.msgbox.scrollHeight
+        self.$nextTick(() => {
+          self.$refs.msgbox.scrollTop = self.$refs.msgbox.scrollHeight
         })
       } else {
         self.bottom = 0.8
       }
     })
     Bus.$on('pushmsg', (msg) => {
-      if (msg.status === 0) {
+      console.log('msg')
+      console.log(msg)
+      if (msg === 'blacklisted') {
+        self.show = true
+        setTimeout(function () {
+          self.show = false
+        }, 8000)
+        self.$nextTick(() => {
+          self.$refs.msgbox.scrollTop = self.$refs.msgbox.scrollHeight
+        })
+      } else if (msg.status === 0) {
         self.msglist.push(msg)
-        this.$nextTick(() => {
-          this.$refs.msgbox.scrollTop = this.$refs.msgbox.scrollHeight
+        self.$nextTick(() => {
+          self.$refs.msgbox.scrollTop = self.$refs.msgbox.scrollHeight
         })
       } else {
         const index = self.$refs[msg.id][0].dataset.index
@@ -156,7 +174,7 @@ export default {
       left: 50%
       top: 50%
       width: 3.6rem
-      height: .8rem
+      height: $height
       transform: translateX(-50%) translateY(-50%)
       padding: .1rem
       background-color: rgba(0, 0, 0, 0.5)
@@ -185,4 +203,21 @@ export default {
         color: #fff
         border-radius: $radius
         background-color: $bgcolor
+      .wrapper
+        display: flex
+        flex-direction: column
+        align-items: flex-start
+        .name
+          color: #ccc
+          font-size: .3rem
+          margin-bottom: .1rem
+      .blacklisted
+        margin: auto
+        text-align: center
+        font-size: .4rem
+        padding: .1rem .2rem
+        padding-top: .1rem
+        color: #fff
+        border-radius: $radius
+        background-color: rgba(0, 0, 0, 0.5)
   </style>

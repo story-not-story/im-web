@@ -21,14 +21,14 @@ export default {
 <style lang="stylus" scoped>
 @import '~styles/variables.styl'
   .header
-    height: .8rem
+    height: $height
     line-height: $height
     background-color: $bgcolor
     background-image: linear-gradient(to right, rgba(93, 211, 250, 1), rgba(69, 168, 248, 1))
     color: #fff
     text-align: center
     position: relative
-    font-size: .5rem
+    font-size: $fz
     .right
       position: absolute
       top: 0

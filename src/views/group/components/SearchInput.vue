@@ -45,12 +45,12 @@ export default {
 <style lang="stylus" scoped>
 @import '~styles/variables.styl'
   .header
-    height: .8rem
+    height: $height
     background-color: $bgcolor
     background-image: linear-gradient(to right, rgba(93, 211, 250, 1), rgba(69, 168, 248, 1))
     color: #fff
     text-align: center
-    font-size: .5rem
+    font-size: $fz
     position: relative
     .search-icon
       height: .7rem
@@ -87,5 +87,5 @@ export default {
         width: 1rem
         float: right
         font-size: .4rem
-        line-height: .8rem
+        line-height: $height
 </style>

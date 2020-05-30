@@ -143,7 +143,7 @@ export default {
         float: left
         text-align: center
         font-size: .6rem
-        line-height: .8rem
+        line-height: $height
       .emoji
         width: 12.5%
         height: 25%
@@ -151,7 +151,7 @@ export default {
         text-align: center
         line-height: .4rem
       .less
-        font-size: .5rem
+        font-size: $fz
       .more
         font-size: .7rem
 </style>

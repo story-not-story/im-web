@@ -1,10 +1,10 @@
 <template>
   <div class="header">
-    <div class="iconfont left" @click="handleBack">取消</div>
+    <div class="left" @click="handleBack">取消</div>
     <div class="mid" v-text="this.$route.query.isGroup ? '加群' : '加好友'">
       加好友
     </div>
-    <div class="iconfont right" @click="handleSend">发送</div>
+    <div class="right" @click="handleSend">发送</div>
   </div>
 </template>
 <script>
@@ -24,16 +24,17 @@ export default {
 <style lang="stylus" scoped>
 @import '~styles/variables.styl'
   .header
-    height: .8rem
+    height: $height
     align-items: center
     background-color: $bgcolor
     background-image: linear-gradient(to right, rgba(93, 211, 250, 1), rgba(69, 168, 248, 1))
     color: #fff
     text-align: center
     display: flex
-    font-size: .5rem
+    font-size: $btnfz
     .mid
       flex: 1
+      font-size: $fz
     .left
       padding-left: $pl
       width: .7rem

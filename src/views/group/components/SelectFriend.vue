@@ -138,7 +138,7 @@ export default {
         padding-left: $pl
         .remark
           padding-top: .2rem
-          font-size: .5rem
+          font-size: $fz
         .word
           font-size: .2rem
           padding-top: .1rem

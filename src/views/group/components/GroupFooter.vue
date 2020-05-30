@@ -39,10 +39,10 @@ export default {
     position: absolute
     bottom: 0
     width: 100%
-    height: .8rem
+    height: $height
     background: $bgcolor
     color: #fff
     text-align: center
     font-size: .6rem
-    line-height: .8rem
+    line-height: $height
 </style>

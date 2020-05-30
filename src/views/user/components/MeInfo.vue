@@ -1,12 +1,15 @@
 <template>
   <div class="meinfo" ref="wrapper">
-    <div class="first-child">
+    <div class="first-child" v-if="show">
       <div class="me">
         <img class="img" alt="玉米粥" :src="$imgurl(user.avatar)"/>
-        <div class="desc border-topbottom">
-          <div class="remark" v-text="user.name">胡君</div>
-          <div class="userid" v-text="user.id">1209226858</div>
-          <div class="word" v-text="user.cityName">温州</div>
+        <div class="right border-bottom">
+          <div class="desc">
+            <div class="remark" v-text="user.name">胡君</div>
+            <div class="userid" v-text="user.id">1209226858</div>
+            <div class="word" v-text="districtName">温州</div>
+          </div>
+          <div class="iconfont icon" @click="show = false">&#xe637;</div>
         </div>
       </div>
 <!--       <Text>
@@ -31,39 +34,176 @@
       </Text> -->
       <div class="info border-bottom">
         <div class="label">个性签名</div>
-        <div class="content"><div class="text" v-text="user.signature"></div> <div class="iconfont icon">&#xe637;</div></div>
+        <div class="content" v-text="user.signature"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
       <div class="info border-bottom">
         <div class="label">生日</div>
-        <div class="content"><div class="text" v-text="user.birthdate"></div> <div class="iconfont icon">&#xe637;</div></div>
+        <div class="content" v-text="user.birthdate"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
       <div class="info border-bottom">
         <div class="label">年龄</div>
-        <div class="content"><div class="text" v-text="user.birthdate"></div> </div>
+        <div class="content" v-text="getAge(user.birthdate)"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
       <div class="info border-bottom">
         <div class="label">性别</div>
-        <div class="content"><div class="text" v-text="user.sex ? 男 : 女"></div> <div class="iconfont icon">&#xe637;</div></div>
+        <div class="content" v-text="user.sex ? '男' : '女'"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
       </div>
       <div class="info border-bottom">
         <div class="label">电话</div>
-        <div class="content"><div class="text" v-text="user.phone"></div> <div class="iconfont icon">&#xe637;</div></div>
+        <div class="content" v-text="user.phone"></div>
         <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
+      </div>
+      <div class="password border-bottom" @click="$router.push({ path: '/password' })">修改密码</div>
+    </div>
+    <div class="first-child" v-else>
+      <div class="me">
+        <input type="file" name="imgFile" ref="imgFile" accept="image/*" @change="previewFile">
+        <img class="img-center" alt="图片预览中" :src="$imgurl(moduser.avatar)" ref="img"/>
+      </div>
+      <div class="info border-bottom">
+        <div class="label">昵称</div>
+        <input type="text" v-model="moduser.name"/>
+        <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
+      </div>
+      <div class="info border-bottom">
+        <div class="label">个性签名</div>
+        <input type="text" v-model="moduser.signature"/>
+        <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
+      </div>
+      <div class="info border-bottom">
+        <div class="label">生日</div>
+        <input type="date" id="99" v-model="moduser.birthdate"/>
+      </div>
+      <div class="info border-bottom">
+        <div class="label">地区</div>
+        <SelectDistrict v-model="districtInfo"></SelectDistrict>
+      </div>
+      <div class="info border-bottom">
+        <div class="label">性别</div>
+        <select class="select" v-model="moduser.sex">
+          <option class="select" disabled :value="undefined">请选择</option>
+          <option class="select" :value="false">女</option>
+          <option class="select" :value="true">男</option>
+        </select>
+      </div>
+      <div class="info border-bottom">
+        <div class="label">电话</div>
+        <input type="text" v-model="moduser.phone"/>
+      </div>
+      <div class="btn">
+        <button type="button" class="item iconfont" @click="reject">&#xe635;</button>
+        <button type="button" class="item iconfont" @click="accept">&#xe813;</button>
       </div>
     </div>
   </div>
 </template>
 <script>
 import BScroll from 'better-scroll'
+import SelectDistrict from 'components/SelectDistrict'
 export default {
   name: 'MeInfo',
+  components: {
+    SelectDistrict
+  },
   data () {
     return {
-      user: {}
+      user: {},
+      moduser: {},
+      show: true,
+      districtName: '',
+      districtInfo: {}
+    }
+  },
+  methods: {
+    previewFile () {
+      const file = this.$refs.imgFile.files[0]
+      const reader = new FileReader()
+      const self = this
+      reader.addEventListener('load', function () {
+        self.$refs.img.src = reader.result
+      }, false)
+      if (file) {
+        reader.readAsDataURL(file)
+        console.log(self.$refs.img)
+        console.log(self.$refs.img.src)
+      }
+    },
+    reject () {
+      this.show = true
+      this.moduser = this.user
+    },
+    accept () {
+      if (typeof this.districtInfo.districtId != 'undefined') {// eslint-disable-line
+        this.moduser.districtId = this.districtInfo.districtId
+      }
+      const self = this
+      var promise = new Promise((resolve, reject) => {
+        const FormData = require('form-data')
+        const formData = new FormData()
+        formData.append('imgFile', this.$refs.imgFile.files[0])
+        formData.append('id', self.moduser.id)
+        formData.append('name', self.moduser.name)
+        formData.append('signature', self.moduser.signature)
+        formData.append('birthdate', self.moduser.birthdate)
+        formData.append('districtId', self.moduser.districtId)
+        formData.append('phone', self.moduser.phone)
+        self.$axios.put('/userinfo', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        }).then((res) => {
+          const data = res.data
+          if (data.code === 0) {
+            self.show = true
+            self.moduser.avatar = data.data.avatar
+            self.user = self.moduser
+            resolve(self.moduser.districtId)
+          }
+        })
+      })
+      promise.then((districtId) => {
+        if (typeof districtId != 'undefined') {// eslint-disable-line
+          self.$axios.get('/district', {
+            params: {
+              districtId: districtId
+            }
+          }).then((res) => {
+            const data = res.data
+            if (data.code === 0) {
+              self.districtInfo = data.data
+              self.districtName = self.districtInfo.provinceName + ' ' + self.districtInfo.cityName + ' ' + self.districtInfo.districtName
+            }
+          })
+        }
+      })
+    },
+    formatDate (UTCDateString) {
+      if (typeof UTCDateString != 'undefined' && UTCDateString !== '') {// eslint-disable-line
+        var date = new Date(UTCDateString)
+        var month = date.getMonth() + 1
+        var strDate = date.getDate()
+        if (month >= 1 && month <= 9) {
+          month = '0' + month
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = '0' + strDate
+        }
+        var currentDate = date.getFullYear() + '-' + month + '-' + strDate
+        return currentDate
+      } else {
+        return UTCDateString
+      }
+    },
+    getAge (UTCDateString) {
+      if (typeof UTCDateString != 'undefined' && UTCDateString !== '') {// eslint-disable-line
+        var date = new Date(UTCDateString)
+        var now = new Date()
+        return now.getFullYear() - date.getFullYear()
+      } else {
+        return UTCDateString
+      }
     }
   },
   created () {
@@ -71,14 +211,37 @@ export default {
     if (this.$route.query.userId) {
       userId = this.$route.query.userId
     }
-    this.$axios.get('/userinfo', {
-      params: {
-        userId: userId
-      }
-    }).then((res) => {
-      const data = res.data
-      if (data.code === 0) {
-        this.user = data.data
+    const self = this
+    var promise = new Promise((resolve, reject) => {
+      self.$axios.get('/userinfo', {
+        params: {
+          userId: userId
+        }
+      }).then((res) => {
+        const data = res.data
+        if (data.code === 0) {
+          if (typeof data.data.birthdate != 'undefined') {// eslint-disable-line
+            data.data.birthdate = self.formatDate(data.data.birthdate)
+          }
+          self.user = data.data
+          self.moduser = data.data
+          resolve(self.moduser.districtId)
+        }
+      })
+    })
+    promise.then((districtId) => {
+      if (typeof districtId != 'undefined') {// eslint-disable-line
+        self.$axios.get('/district', {
+          params: {
+            districtId: districtId
+          }
+        }).then((res) => {
+          const data = res.data
+          if (data.code === 0) {
+            self.districtInfo = data.data
+            self.districtName = self.districtInfo.provinceName + ' ' + self.districtInfo.cityName + ' ' + self.districtInfo.districtName
+          }
+        })
       }
     })
   },
@@ -97,11 +260,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '~styles/variables.styl'
-  .border-topbottom
-    &:before
-      border-color: $grey
-    &:after
-      border-color: $grey
+@import '~styles/mixins.styl'
   .border-bottom
     &:before
       border-color: $grey
@@ -112,6 +271,14 @@ export default {
     right: 0
     bottom: .8rem
     left: 0
+    .password
+      font-size: .3rem
+      height: 1rem
+      margin: 0 .2rem
+      text-align: center
+      color: $grey
+      background-color: #fff
+      line-height: 1rem
     .info
       font-size: .3rem
       height: 1rem
@@ -121,8 +288,14 @@ export default {
       justify-content: space-between
       align-items: center
       color: $grey
+      background-color: #fff
+      .signature
+        ellipsis()
+      .select
+        background-color: #fff
+        text-align: center
       .content
-        display: flex
+        color: #999
         // flex对于单个子标签的作用类似inline-box，此外布局
     .me
       display: flex
@@ -133,14 +306,42 @@ export default {
         height: 1.4rem
         margin: .1rem
         border-radius: $circle
-      .desc
+      .img-center
+        width: 1.4rem
+        height: 1.4rem
+        margin: 0 auto
+        border-radius: $circle
+      .right
         flex: 1
-        padding-left: $pl
-        .remark
-          padding-top: .2rem
-          font-size: .5rem
-        .word, .userid
-          font-size: .2rem
-          padding-top: .1rem
-          color: #20222e
+        display: flex
+        .icon
+          line-height: 1.6rem
+          height: 1.6rem
+          font-size: $fz
+          padding-right: $pl
+          color: $grey
+        .desc
+          flex: 1
+          padding-left: $pl
+          .remark
+            padding-top: .2rem
+            font-size: $fz
+            ellipsis()
+          .word, .userid
+            padding-top: .1rem
+            font-size: .2rem
+            color: #20222e
+    .btn
+      height: $height
+      display: flex
+      justify-content: space-around
+      align-items: center
+      .item
+        background-color: $bgcolor
+        border-radius: $radius
+        color: #fff
+        width: 25%
+        height: .4rem
+        text-align: center
+        line-height: .4rem
 </style>

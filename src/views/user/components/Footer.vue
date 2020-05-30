@@ -17,7 +17,7 @@ export default {
     position: absolute
     bottom: 0
     width: 100%
-    height: .8rem
+    height: $height
     background: #fff
     .myicon
       width: 33.33%
@@ -26,5 +26,5 @@ export default {
       float: left
       text-align: center
       font-size: .6rem
-      line-height: .8rem
+      line-height: $height
 </style>
