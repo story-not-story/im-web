@@ -39,7 +39,7 @@
       <div>管理员</div>
       <span class="iconfont">&#xe603;</span>
     </div>
-    <div class="border-bottom line center">删除聊天记录</div>
+    <div class="border-bottom line center" @click="delMsg">删除聊天记录</div>
     <div class="border-bottom line center del" v-text="me.grade === 2 ? '解散群': '退出该群'" @click="delGroup">退出该群</div>
   </div>
 </template>
@@ -62,6 +62,20 @@ export default {
     LMHeader
   },
   methods: {
+    delMsg () {
+      this.$axios.delete('/message/batch', {
+        params: {
+          isGroup: true,
+          otherId: this.$route.query.otherId,
+          userId: this.$store.state.userId
+        }
+      }).then((res) => {
+        const data = res.data
+        if (data.code === 0) {
+          console.log('delMsg')
+        }
+      })
+    },
     handleShow () {
       this.show = true
     },

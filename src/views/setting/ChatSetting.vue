@@ -79,7 +79,20 @@ export default {
         }
       })
     },
-    delMsg () {},
+    delMsg () {
+      this.$axios.delete('/message/batch', {
+        params: {
+          isGroup: false,
+          otherId: this.$route.query.otherId,
+          userId: this.$store.state.userId
+        }
+      }).then((res) => {
+        const data = res.data
+        if (data.code === 0) {
+          console.log('delMsg')
+        }
+      })
+    },
     delFriend () {
       this.$axios.delete('/friend', {
         params: {

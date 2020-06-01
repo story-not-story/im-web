@@ -14,7 +14,6 @@ export default {
   name: 'InnerSearchHeader',
   data () {
     return {
-      show: true,
       text: ''
     }
   },

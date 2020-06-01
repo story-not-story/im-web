@@ -19,7 +19,7 @@
 import BScroll from 'better-scroll'
 // import { mapState, mapMutations } from 'vuex'
 export default {
-  name: 'GroupInfo',
+  name: 'GroupBody',
   data () {
     return {
       group: {}
