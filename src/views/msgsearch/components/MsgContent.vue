@@ -1,5 +1,5 @@
 <template>
-  <div class="msglist" ref="msgbox" :style="{bottom: bottom + 'rem'}">
+  <div class="msglist" ref="msgbox">
     <div class="first-child" @click="hide">
       <div class="msg" @contextmenu.prevent @touchstart="gotouchstart(item, index)" @touchmove="gotouchmove" v-for="(item,index) in msglist" :key="item.id" :ref="item.id" :data-index="index" :style="{ 'flex-direction': item.senderId === $store.state.userId ? 'row-reverse' : 'row' }">
         <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)" @click.stop="userinfo(item.senderId)"/>
@@ -21,7 +21,6 @@
   </div>
 </template>
 <script>
-// first-child增长内容超过固定高度的wrapper时才会scroll生效，所以要把增长内容用两层div包裹
 import Bus from '@/bus.js'
 export default {
   name: 'MsgContent',
@@ -30,7 +29,6 @@ export default {
       maxScrollY: 0,
       y: 0,
       msglist: [],
-      bottom: 0.8,
       timeOutEvent: null,
       menushow: false,
       curMsg: null,
@@ -40,40 +38,24 @@ export default {
     }
   },
   created () {
-    var self = this
-    Bus.$on('change-height', () => {
-      if (self.bottom === 0.8) {
-        self.bottom = 2.4
-        self.$nextTick(() => {
-          self.$refs.msgbox.scrollTop = self.$refs.msgbox.scrollHeight
-        })
+    const self = this
+    if (this.$route.query.isGroup === true || typeof this.$route.query.isGroup == 'string' && this.$route.query.isGroup === 'true') {// eslint-disable-line
+      this.isGroupAll = true
+    } else {
+      this.isGroupAll = false
+    }
+    Bus.$on('searchmsg', (text) => {
+      if (text === '') {
+        self.getData()
       } else {
-        self.bottom = 0.8
+        self.searchData(text)
       }
     })
-    Bus.$on('pushmsg', (msg) => {
-      console.log('msg')
-      console.log(msg)
-      if (msg === 'blacklisted') {
-        self.show = true
-        setTimeout(function () {
-          self.show = false
-        }, 8000)
-        self.$nextTick(() => {
-          self.$refs.msgbox.scrollTop = self.$refs.msgbox.scrollHeight
-        })
-      } else if (msg.status === 0) {
-        self.msglist.push(msg)
-        self.$nextTick(() => {
-          self.$refs.msgbox.scrollTop = self.$refs.msgbox.scrollHeight
-        })
-      } else {
-        const index = self.$refs[msg.id][0].dataset.index
-        self.msglist.splice(index, 1)
-      }
-    })
-    Bus.$on('refresh', () => self.getData())
-    this.getData()
+    if (this.$route.query.text) {
+      this.searchData(this.$route.query.text)
+    } else {
+      this.getData()
+    }
   },
   watch: {
     msglist: function (value, oldvalue) {
@@ -85,12 +67,22 @@ export default {
     }
   },
   methods: {
+    searchData (text) {
+      this.$axios.get('/message/search', {
+        params: {
+          isGroup: this.$route.query.isGroup,
+          otherId: this.$route.query.otherId,
+          userId: this.$store.state.userId,
+          text: text
+        }
+      }).then((res) => {
+        const data = res.data
+        if (data.code === 0) {
+          this.msglist = data.data
+        }
+      })
+    },
     getData () {
-      if (this.$route.query.isGroup === true || typeof this.$route.query.isGroup == 'string' && this.$route.query.isGroup === 'true') {// eslint-disable-line
-        this.isGroupAll = true
-      } else {
-        this.isGroupAll = false
-      }
       this.$axios.get('/message/detail', {
         params: {
           isGroup: this.$route.query.isGroup,
@@ -170,8 +162,8 @@ export default {
     position: absolute
     left: 0
     right: 0
-    top: .8rem
-    bottom: .8rem
+    top: 2.4rem
+    bottom: 0
     overflow-y: scroll
     .menu
       z-index: 1

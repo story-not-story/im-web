@@ -15,19 +15,19 @@
     <div class="border-bottom line lr">
       <div class="label">群签名</div>
       <div>
-        <input class="remark" type="text" v-model="signature" @keyup.enter="handleSignature" @click="handleShow1"/>
+        <input class="remark" type="text" :disabled="disabled" v-model="signature" @keyup.enter="handleSignature" @click="handleShow1"/>
         <span class="cancel" v-show="show1" @click="cancel1">取消</span>
       </div>
     </div>
     <div class="lr border-bottom line">
-      <div>查找聊天记录</div>
+      <div @click="searchMsg">查找聊天记录</div>
       <div>图片、视频、文件等<span class="iconfont">&#xe603;</span></div>
     </div>
     <div class="lr border-bottom line">
       <div>群文件</div>
       <span class="iconfont">&#xe603;</span>
     </div>
-    <div class="lr border-bottom line">
+    <div class="lr border-bottom line" @click="toTextArea">
       <div>群公告</div>
       <span class="iconfont">&#xe603;</span>
     </div>
@@ -55,13 +55,27 @@ export default {
       me: {},
       list: [],
       show: false,
-      show1: false
+      show1: false,
+      disabled: true
     }
   },
   components: {
     LMHeader
   },
   methods: {
+    toTextArea () {
+      this.$router.push({ path: '/text', query: { notice: this.group.notice, groupId: this.group.id } })
+    },
+    searchMsg () {
+      this.$router.push({
+        path: '/message/search',
+        query: {
+          isGroup: true,
+          otherId: this.$route.query.otherId,
+          userId: this.$store.state.userId
+        }
+      })
+    },
     delMsg () {
       this.$axios.delete('/message/batch', {
         params: {
@@ -112,6 +126,9 @@ export default {
           this.list = data.data
           this.me = this.list.filter(item => this.$store.state.userId === item.userId)[0]
           this.remark = this.me.name
+          if (this.me.grade === 2) {
+            this.disabled = false
+          }
         }
       })
     },

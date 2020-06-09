@@ -1,0 +1,290 @@
+<template>
+  <div class="meinfo" ref="wrapper">
+    <div class="first-child">
+      <div class="me">
+        <input v-show="false" type="file" name="imgFile" ref="imgFile" accept="image/*" @change="previewFile">
+        <img @click="upload" class="img-center" alt="图片预览中" :src="$imgurl(moduser.avatar)" ref="img"/>
+      </div>
+      <div class="info border-bottom">
+        <div class="label">昵称</div>
+        <input type="text" v-model="moduser.name"/>
+        <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
+      </div>
+      <div class="info border-bottom">
+        <div class="label">个性签名</div>
+        <input type="text" v-model="moduser.signature"/>
+        <!-- {{}}表达式和v-text不一样，前者可以组合别的标签成为内容，后端把内容全部替换掉，产生别的标签消失的效果 -->
+      </div>
+      <div class="info border-bottom">
+        <div class="label">生日</div>
+        <input type="date" id="99" v-model="moduser.birthdate"/>
+      </div>
+      <div class="info border-bottom">
+        <div class="label">地区</div>
+        <SelectDistrict v-model="districtInfo"></SelectDistrict>
+      </div>
+      <div class="info border-bottom">
+        <div class="label">性别</div>
+        <select class="select" v-model="moduser.sex">
+          <option class="select" disabled :value="undefined">请选择</option>
+          <option class="select" :value="false">女</option>
+          <option class="select" :value="true">男</option>
+        </select>
+      </div>
+      <div class="info border-bottom">
+        <div class="label">电话</div>
+        <input type="text" v-model="moduser.phone"/>
+      </div>
+      <div class="btn">
+        <button type="button" class="item iconfont" @click="reject">&#xe635;</button>
+        <button type="button" class="item iconfont" @click="accept">&#xe813;</button>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import BScroll from 'better-scroll'
+import SelectDistrict from 'components/SelectDistrict'
+export default {
+  name: 'ModMe',
+  components: {
+    SelectDistrict
+  },
+  data () {
+    return {
+      // user: {},
+      moduser: {},
+      // show: true,
+      districtName: '',
+      districtInfo: {}
+    }
+  },
+  methods: {
+    upload () {
+      this.$refs.imgFile.dispatchEvent(new MouseEvent('click'))
+    },
+    previewFile () {
+      const file = this.$refs.imgFile.files[0]
+      const reader = new FileReader()
+      const self = this
+      reader.addEventListener('load', function () {
+        self.$refs.img.src = reader.result
+      }, false)
+      if (file) {
+        reader.readAsDataURL(file)
+      }
+    },
+    reject () {
+      this.$router.go(-1)
+      // this.moduser = this.user
+    },
+    accept () {
+      if (typeof this.districtInfo.districtId != 'undefined') {// eslint-disable-line
+        this.moduser.districtId = this.districtInfo.districtId
+      }
+      const self = this
+      const FormData = require('form-data')
+      const formData = new FormData()
+      formData.append('imgFile', this.$refs.imgFile.files[0])
+      formData.append('id', self.moduser.id)
+      formData.append('name', self.moduser.name)
+      formData.append('signature', self.moduser.signature)
+      formData.append('birthdate', self.moduser.birthdate)
+      formData.append('districtId', self.moduser.districtId)
+      formData.append('phone', self.moduser.phone)
+      formData.append('sex', self.moduser.sex)
+      self.$axios.put('/userinfo', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }).then((res) => {
+        const data = res.data
+        if (data.code === 0) {
+          this.$router.go(-1)
+          // self.moduser.avatar = data.data.avatar
+          // self.user = self.moduser
+          // resolve(self.moduser.districtId)
+        }
+      })
+      // var promise = new Promise((resolve, reject) => {})
+      // promise.then((districtId) => {
+      //   if (typeof districtId != 'undefined') {// eslint-disable-line
+      //     self.$axios.get('/district', {
+      //       params: {
+      //         districtId: districtId
+      //       }
+      //     }).then((res) => {
+      //       const data = res.data
+      //       if (data.code === 0) {
+      //         self.districtInfo = data.data
+      //         // self.districtName = self.districtInfo.provinceName + ' ' + self.districtInfo.cityName + ' ' + self.districtInfo.districtName
+      //       }
+      //     })
+      //   }
+      // })
+    },
+    formatDate (UTCDateString) {
+      if (typeof UTCDateString != 'undefined' && UTCDateString !== '') {// eslint-disable-line
+        var date = new Date(UTCDateString)
+        var month = date.getMonth() + 1
+        var strDate = date.getDate()
+        if (month >= 1 && month <= 9) {
+          month = '0' + month
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = '0' + strDate
+        }
+        var currentDate = date.getFullYear() + '-' + month + '-' + strDate
+        return currentDate
+      } else {
+        return UTCDateString
+      }
+    },
+    getAge (UTCDateString) {
+      if (typeof UTCDateString != 'undefined' && UTCDateString !== '') {// eslint-disable-line
+        var date = new Date(UTCDateString)
+        var now = new Date()
+        return now.getFullYear() - date.getFullYear()
+      } else {
+        return UTCDateString
+      }
+    }
+  },
+  created () {
+    let userId = this.$store.state.userId
+    if (this.$route.query.userId) {
+      userId = this.$route.query.userId
+    }
+    const self = this
+    var promise = new Promise((resolve, reject) => {
+      self.$axios.get('/userinfo', {
+        params: {
+          userId: userId
+        }
+      }).then((res) => {
+        const data = res.data
+        if (data.code === 0) {
+          if (typeof data.data.birthdate != 'undefined') {// eslint-disable-line
+            data.data.birthdate = self.formatDate(data.data.birthdate)
+          }
+          // self.user = data.data
+          self.moduser = data.data
+          resolve(self.moduser.districtId)
+        }
+      })
+    })
+    promise.then((districtId) => {
+      if (typeof districtId != 'undefined') {// eslint-disable-line
+        self.$axios.get('/district', {
+          params: {
+            districtId: districtId
+          }
+        }).then((res) => {
+          const data = res.data
+          if (data.code === 0) {
+            self.districtInfo = data.data
+            // self.districtName = self.districtInfo.provinceName + ' ' + self.districtInfo.cityName + ' ' + self.districtInfo.districtName
+          }
+        })
+      }
+    })
+  },
+  mounted () {
+    this.$nextTick(() => {
+      if (!this.scroll) {
+        this.scroll = new BScroll(this.$refs.wrapper, {
+          click: true
+        })
+      } else if (this.$refs.wrapper) {
+        this.scroll.refresh()
+      }
+    })
+  }
+}
+</script>
+<style lang="stylus" scoped>
+@import '~styles/variables.styl'
+@import '~styles/mixins.styl'
+  .border-bottom
+    &:before
+      border-color: $grey
+  .meinfo
+    position: absolute
+    overflow: hidden
+    top: .8rem
+    right: 0
+    bottom: .8rem
+    left: 0
+    .password
+      font-size: .3rem
+      height: 1rem
+      margin: 0 .2rem
+      text-align: center
+      color: $grey
+      background-color: #fff
+      line-height: 1rem
+    .info
+      font-size: .3rem
+      height: 1rem
+      // line-height: 1rem// .icon继承了line-height的情况下设置宽高会导致overflow内容不显示，产生不显示效果
+      margin: 0 .2rem
+      display: flex
+      justify-content: space-between
+      align-items: center
+      color: $grey
+      background-color: #fff
+      .signature
+        ellipsis()
+      .select
+        background-color: #fff
+        text-align: center
+      .content
+        color: #999
+        // flex对于单个子标签的作用类似inline-box，此外布局
+    .me
+      display: flex
+      width: 100%
+      height: 1.6rem
+      .img
+        width: 1.4rem
+        height: 1.4rem
+        margin: .1rem
+        border-radius: $circle
+      .img-center
+        width: 1.4rem
+        height: 1.4rem
+        margin: 0 auto
+        border-radius: $circle
+        cursor: pointer
+      .right
+        flex: 1
+        display: flex
+        .icon
+          line-height: 1.6rem
+          height: 1.6rem
+          font-size: $fz
+          padding-right: $pl
+          color: $grey
+        .desc
+          flex: 1
+          padding-left: $pl
+          .remark
+            padding-top: .2rem
+            font-size: $fz
+            ellipsis()
+          .word, .userid
+            padding-top: .1rem
+            font-size: .2rem
+            color: #20222e
+    .btn
+      height: $height
+      display: flex
+      justify-content: space-around
+      align-items: center
+      .item
+        background-color: $bgcolor
+        border-radius: $radius
+        color: #fff
+        width: 25%
+        height: .4rem
+        text-align: center
+        line-height: .4rem
+</style>

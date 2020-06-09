@@ -6,6 +6,8 @@ import fastClick from 'fastclick'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from 'axios'
 import qs from 'qs'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import 'styles/border.css'
 import 'styles/reset.css'
 import 'styles/iconfont.css'
@@ -15,7 +17,11 @@ import 'swiper/css/swiper.css'
 import VueRouter from 'vue-router'
 import ws from './ws.js'
 import VueClipboard from 'vue-clipboard2'
+import VueWorker from 'vue-worker'
+import 'spark-md5/spark-md5.js'
 
+Vue.use(VueWorker)
+Vue.use(ElementUI)
 Vue.use(VueClipboard)
 Vue.config.productionTip = false
 fastClick.attach(document.body)

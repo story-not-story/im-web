@@ -2,29 +2,29 @@
   <div class="menu">
     <router-link to="/relation">
       <div class="myicon">
-        <div :class="flag('/relation')">好友</div>
+        <div :class="flag('/relation')">全部</div>
       </div>
     </router-link>
     <router-link to="/relation/label">
       <div class="myicon">
-        <div :class="flag('/relation/label')">分组</div>
+        <div :class="flag('/relation/label')">图/视频</div>
       </div>
     </router-link>
     <router-link to="/relation/group">
       <div class="myicon">
-        <div :class="flag('/relation/group')">群聊</div>
+        <div :class="flag('/relation/group')">表情</div>
       </div>
     </router-link>
     <router-link to="/relation/invite">
       <div class="myicon">
-        <div :class="flag('/relation/invite')">申请</div>
+        <div :class="flag('/relation/invite')">文件</div>
       </div>
     </router-link>
   </div>
 </template>
 <script>
 export default {
-  name: 'Menu',
+  name: 'FileType',
   methods: {
     flag (url) {
       if (this.$route.path === url) {
@@ -39,8 +39,8 @@ export default {
 <style lang="stylus" scoped>
 @import '~styles/variables.styl'
   .menu
-    position: absolute
-    top: .8rem
+    // position: absolute
+    // top: .8rem
     width: 100%
     height: $height
     background: #fff

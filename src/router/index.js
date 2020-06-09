@@ -4,6 +4,8 @@ import MsgList from '../views/msglist/MsgList.vue'
 import Login from '../views/login/Login.vue'
 import Search from '../views/search/Search.vue'
 import Me from '../views/user/Me.vue'
+import MeInfo from '../views/user/components/MeInfo.vue'
+import ModMe from '../views/user/components/ModMe.vue'
 import Password from '../views/user/Password.vue'
 import Relation from '../views/relation/Relation.vue'
 import LabelList from '../views/label/LabelList.vue'
@@ -20,10 +22,15 @@ import CreateGroup from '../views/group/CreateGroup.vue'
 import InnerSearch from '../views/search/InnerSearch.vue'
 import ApplyDetail from '../views/applydetail/ApplyDetail.vue'
 import Setting from '../views/setting/Setting.vue'
+import Text from '../views/settingfuc/Text.vue'
 import ChatSetting from '../views/setting/ChatSetting.vue'
 import UserSetting from '../views/setting/UserSetting.vue'
 import GroupSetting from '../views/setting/GroupSetting.vue'
 import MsgSearch from '../views/msgsearch/MsgSearch.vue'
+import All from '../views/msgsearch/All.vue'
+import Emoji from '../views/msgsearch/Emoji.vue'
+import File from '../views/msgsearch/File.vue'
+import ImgVideo from '../views/msgsearch/ImgVideo.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -96,7 +103,19 @@ const routes = [
   {
     path: '/me',
     name: 'Me',
-    component: Me
+    component: Me,
+    children: [
+      {
+        path: 'mod',
+        name: 'ModMe',
+        component: ModMe
+      },
+      {
+        path: '',
+        name: 'MeInfo',
+        component: MeInfo
+      }
+    ]
   },
   {
     path: '/password',
@@ -119,9 +138,36 @@ const routes = [
     component: Message
   },
   {
+    path: '/text',
+    name: 'Text',
+    component: Text
+  },
+  {
     path: '/message/search',
     name: 'MsgSearch',
-    component: MsgSearch
+    component: MsgSearch,
+    children: [
+      {
+        path: 'imgvideo',
+        name: 'ImgVideo',
+        component: ImgVideo
+      },
+      {
+        path: 'emoji',
+        name: 'Emoji',
+        component: Emoji
+      },
+      {
+        path: 'file',
+        name: 'File',
+        component: File
+      },
+      {
+        path: '',
+        name: 'All',
+        component: All
+      }
+    ]
   },
   {
     path: '/setting',

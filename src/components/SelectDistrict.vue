@@ -60,6 +60,13 @@ export default {
       if (newvalue !== oldvalue && oldvalue !== '') {
         this.districtId = ''
       }
+    },
+    value: function (newvalue, oldvalue) {
+      if (Object.keys(oldvalue).length === 0 && Object.keys(newvalue).length > 0) {
+        this.provinceId = this.value.provinceId
+        this.cityId = this.value.cityId
+        this.districtId = this.value.districtId
+      }
     }
   },
   created () {
@@ -69,9 +76,6 @@ export default {
         this.map = data.data
       }
     })
-    this.provinceId = this.value.provinceId
-    this.cityId = this.value.cityId
-    this.districtId = this.value.districtId
   }
 }
 </script>

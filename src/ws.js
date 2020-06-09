@@ -10,6 +10,7 @@ const ws = {
   creatWebSocket: function () {
     if ('WebSocket' in window) {
       this.websocket = new WebSocket('ws://' + location.host + '/websocket/' + store.state.userId)
+      this.websocket.binaryType = 'arraybuffer'
       var self = this
       this.websocket.onerror = function (e) {
         console.log(e)

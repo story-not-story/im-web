@@ -26,7 +26,7 @@
       </div>
       <div v-show="top3msg.length > 0">
         <div class="category">消息</div>
-        <div class="friend border-topbottom" v-for="item in top3msg" :key="item.id" @click="$router.push({ path: '/message/search' })">
+        <div class="friend border-topbottom" v-for="item in top3msg" :key="item.id" @click="toMsgSearch(item.msglist[0])">
           <img class="img" alt="玉米粥" :src="$imgurl(item.avatar)"/>
           <div class="desc">
             <div class="remark" v-text="item.name">胡君</div>
@@ -51,10 +51,23 @@ export default {
       top3friend: [],
       top3group: [],
       top3msg: [],
-      show: false
+      show: false,
+      text: ''
     }
   },
   methods: {
+    toMsgSearch (msg) {
+      const otherId = msg.senderId === this.$store.state.userId ? msg.receiverId : msg.senderId
+      this.$router.push({
+        path: '/message/search',
+        query: {
+          isGroup: msg.isGroup,
+          otherId: otherId,
+          userId: this.$store.state.userId,
+          text: this.text
+        }
+      })
+    },
     handleClick (index) {
       switch (index) {
         case 0:
@@ -85,6 +98,7 @@ export default {
   created () {
     const self = this
     Bus.$on('searchsum', (text) => {
+      self.text = text
       self.friendlist = []
       self.grouplist = []
       self.msglist = []

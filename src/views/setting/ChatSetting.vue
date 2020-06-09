@@ -6,7 +6,7 @@
       <span class="iconfont">&#xe603;</span>
     </div>
     <div class="lr border-bottom line">
-      <div>查找聊天记录</div>
+      <div @click="searchMsg">查找聊天记录</div>
       <div>图片、视频、文件等<span class="iconfont">&#xe603;</span></div>
     </div>
     <div class="border-bottom line lr">
@@ -45,6 +45,16 @@ export default {
     LMHeader
   },
   methods: {
+    searchMsg () {
+      this.$router.push({
+        path: '/message/search',
+        query: {
+          isGroup: false,
+          otherId: this.$route.query.otherId,
+          userId: this.$store.state.userId
+        }
+      })
+    },
     handleShow () {
       this.show = true
     },
